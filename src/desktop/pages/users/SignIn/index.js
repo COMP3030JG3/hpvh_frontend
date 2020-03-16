@@ -2,9 +2,6 @@ import React from "react";
 
 export default (props) => {
     return (
-        <div>Help</div>
+        <div>Sign In</div>
     );
 };
-
-
-
