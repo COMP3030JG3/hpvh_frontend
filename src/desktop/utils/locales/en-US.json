@@ -3,5 +3,6 @@
     "main.navigator.about": "About Us",
     "main.navigator.help": "Help",
     "main.navigator.login": "Login",
-    "main.navigator.signin": "Sign In"
+    "main.navigator.signin": "Sign In",
+    "main.navigator.language": "Language"
 }

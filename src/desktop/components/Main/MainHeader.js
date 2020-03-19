@@ -53,7 +53,7 @@ const MainHeader = (props) => {
             <div style={{ float: 'right', overflow: 'hidden' }}>
                 <Dropdown overlay={langMenu}>
                     <Button type="link" ghost>
-                        Language <DownOutlined />
+                        <FormattedMessage id="main.navigator.language" /> <DownOutlined />
                     </Button>
                 </Dropdown>
                 <Link to="/login" className="item">
