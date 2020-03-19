@@ -1,11 +1,12 @@
 import React from "react";
 import { Layout, Menu, Button, Dropdown } from 'antd';
-//import { Row, Col } from 'antd'
+import { FormattedMessage } from 'react-intl'
+import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 import { DownOutlined } from '@ant-design/icons';
 const { Header } = Layout;
 
-export default (props) => {
+const MainHeader = (props) => {
 
     const logoStyle = {
         float: 'left',
@@ -15,14 +16,21 @@ export default (props) => {
         margin: '0 20px',
     }
 
+    const lanMenuOnClick = (e) => {
+        console.log(props.lang)
+        props.langChange(e.key);
+    }
+
+
     const langMenu = (
-        <Menu >
+        <Menu onClick={lanMenuOnClick}>
             <Menu.Item key="en">English</Menu.Item>
             <Menu.Item key="zh">中文</Menu.Item>
         </Menu>
     );
 
     return (
+
         <Header style={{ padding: '0 10px' }}>
             <div style={logoStyle} >Healing Paws</div>
             <Menu
@@ -32,13 +40,13 @@ export default (props) => {
                 style={{ float: 'left', lineHeight: '64px' }}
             >
                 <Menu.Item key="/">
-                    <Link to="/" className="item">Home</Link>
+                    <Link to="/" className="item"><FormattedMessage id="main.navigator.home" /></Link>
                 </Menu.Item>
                 <Menu.Item key="/about">
-                    <Link to="/about" className="item">About</Link>
+                    <Link to="/about" className="item"><FormattedMessage id="main.navigator.about" /></Link>
                 </Menu.Item>
                 <Menu.Item key="/help">
-                    <Link to="/help" className="item">Help</Link>
+                    <Link to="/help" className="item"><FormattedMessage id="main.navigator.help" /></Link>
                 </Menu.Item>
             </Menu>
 
@@ -49,10 +57,10 @@ export default (props) => {
                     </Button>
                 </Dropdown>
                 <Link to="/login" className="item">
-                    <Button type="link">Login</Button>
+                    <Button type="link"><FormattedMessage id="main.navigator.login" /></Button>
                 </Link>
                 <Link to="/signin" className="item">
-                    <Button type="link">Sign In</Button>
+                    <Button type="link"><FormattedMessage id="main.navigator.signin" /></Button>
                 </Link>
             </div>
         </Header>
@@ -60,4 +68,12 @@ export default (props) => {
 };
 
 
+const mapState = state => ({
+    lang: state.language,
+});
 
+const mapDispatch = dispatch => ({
+    langChange: dispatch.language.langChange,
+});
+
+export default connect(mapState, mapDispatch)(MainHeader);

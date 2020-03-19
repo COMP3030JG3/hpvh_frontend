@@ -1,21 +1,38 @@
 import React from 'react';
 
-import { Provider } from 'react-redux';
-import { IntlProvider } from 'react-intl';
+import { Provider, connect } from 'react-redux';
+import { IntlProvider, injectIntl } from 'react-intl';
 import { ConfigProvider } from 'antd';
 import 'antd/dist/antd.css';
 import { store } from './config/store';
 import { language } from './config/intl'
 import AppRouter from './routes/AppRouter';
 
+
+const AppWithState = ({ lang }) => {
+    const I18nApp = injectIntl(AppRouter);
+    const showLang = lang === 'en' ? language.en : language.zh;
+    return (
+        <IntlProvider locale={showLang.lang} messages={showLang.intl}>
+            <ConfigProvider locale={showLang.antd}>
+                <I18nApp />
+            </ConfigProvider>
+        </IntlProvider>
+    )
+}
+
+const mapState = state => ({
+    lang: state.language,
+});
+
+const AppProvider = connect(mapState, null)(AppWithState)
+
+
 const App = (props) => {
+
     return (
         <Provider store={store}>
-            <IntlProvider locale={language.lang} message={language.intl}>
-                <ConfigProvider locale={language.antd}>
-                    <AppRouter />
-                </ConfigProvider>
-            </IntlProvider>
+            <AppProvider />
         </Provider>
     );
 };

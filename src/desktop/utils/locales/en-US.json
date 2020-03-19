@@ -1,3 +1,7 @@
 {
-    "test": "test"
+    "main.navigator.home": "Home",
+    "main.navigator.about": "About Us",
+    "main.navigator.help": "Help",
+    "main.navigator.login": "Login",
+    "main.navigator.signin": "Sign In"
 }

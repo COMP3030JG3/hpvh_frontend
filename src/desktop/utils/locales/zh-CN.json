@@ -1,3 +1,7 @@
 {
-    "test": "测试"
+    "main.navigator.home": "主页",
+    "main.navigator.about": "关于我们",
+    "main.navigator.help": "帮助",
+    "main.navigator.login": "登录",
+    "main.navigator.signin": "注册"
 }
