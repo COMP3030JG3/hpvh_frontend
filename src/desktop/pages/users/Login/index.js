@@ -1,7 +1,7 @@
 import React from "react";
-
+import LoginContainer from './LoginContainer'
 export default (props) => {
     return (
-        <div>Login</div>
+        <LoginContainer/>
     );
 };
