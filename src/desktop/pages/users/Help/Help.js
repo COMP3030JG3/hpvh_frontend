@@ -18,6 +18,13 @@ class QuestionForm extends React.Component {
   }
 
   handleSubmit(event) {
+    var list = document.getElementById('l');
+    var listItem = document.createElement('li');
+    var listText = document.createElement('span');
+    var listBtn = document.createElement('button');
+    listItem.appendChild(listText);
+    listText.textContent = this.state.value;
+    list.appendChild(listItem);
     alert('Question ' + this.state.value);
     event.preventDefault();
   }
@@ -33,6 +40,7 @@ class QuestionForm extends React.Component {
                 <input type="submit" value="submit" />
         </form>
         <h1 onClick={this.handleSubmit}>{this.state.value}</h1>
+        <ol id='l'></ol>
       </div>
     );
   }
