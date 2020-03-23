@@ -1,7 +1,8 @@
 import React from "react";
-import HomeContainer from './HomeContainer'
+import About from './About'
 export default (props) => {
+    
     return (
-        <HomeContainer />
+        <About data="" />
     );
 };
