@@ -1,7 +1,8 @@
 import React from "react";
-import HelpContainer from './HelpContainer'
+import Help from './Help'
 export default (props) => {
+
     return (
-        <HelpContainer />
+        <Help />
     );
 };
