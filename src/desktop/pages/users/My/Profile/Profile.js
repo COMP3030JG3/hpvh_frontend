@@ -25,7 +25,7 @@ export default (props) => {
                 actions={[
                     <Dropdown overlay={menu}><TranslationOutlined key="language" /></Dropdown>,
                     <SettingOutlined key="setting" />,
-                    <EditOutlined key="edit" />,
+                    <EditOutlined onClick={props.onEditClick} key="edit" />,
                     <ExportOutlined key="logout" />,
                 ]}
             >
@@ -38,16 +38,15 @@ export default (props) => {
             <Card
 
             >
-
-
                 <Menu
-                    onClick={handleClick}
+                    onClick={props.onMenuClick}
                     style={{ width: "100%", border: 0 }}
-                    defaultOpenKeys={['appointments']}
+
+                    selectedKeys={[props.menuKey]}
                     mode="inline"
                 >
                     <Menu.Item key="appointments">My Appointment</Menu.Item>
-                    <Menu.Item key="healingpets">Healing Pets</Menu.Item>
+                    <Menu.Item key="tracks">Healing Pets</Menu.Item>
                     <Menu.Item key="newappointment">Make New Appointment</Menu.Item>
                 </Menu>
 
