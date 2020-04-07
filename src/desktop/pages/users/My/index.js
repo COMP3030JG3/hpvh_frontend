@@ -1,10 +1,8 @@
 import React from "react";
+import MyContainer from "./MyContainer"
 
 export default (props) => {
     return (
-        <div>Home</div>
+        <MyContainer />
     );
 };
-
-
-

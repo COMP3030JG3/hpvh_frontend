@@ -1,7 +1,11 @@
 import React from "react";
+import SigninContainer from './SigninContainer'
 
 export default (props) => {
     return (
-        <div>Sign In</div>
+
+        <SigninContainer />
+
+
     );
 };
