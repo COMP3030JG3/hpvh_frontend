@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, Select, Row, Col, Checkbox, Button, Card } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import "./less/signinForm.less"
+import "./less/signupForm.less"
 
 const { Option } = Select;
 const formItemLayout = {
@@ -74,7 +74,7 @@ export default (props) => {
 
     return (
         <div>
-            <Card className="signin-form">
+            <Card className="signup-form">
                 <Form
                     className='SingInForm'
                     layout='vertical'
@@ -255,7 +255,7 @@ export default (props) => {
                         </Checkbox>
                     </Form.Item>
                     <Form.Item {...tailFormItemLayout}>
-                        <Button type="primary" htmlType="submit" className="signin-form-button">
+                        <Button type="primary" htmlType="submit" className="signup-form-button">
                             Register
         </Button>
                     </Form.Item>

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Form, Input, Button, Checkbox, Card, Radio } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -65,8 +66,8 @@ export default (props) => {
                         </Button>
                         {languages["login.or"]}
                         <Button type="dash" className="login-form-button">
-                            <Link to="/signin">
-                                {languages["login.signin"]}
+                            <Link to="/signup">
+                                {languages["login.signup"]}
                             </Link>
                         </Button>
                     </Form.Item>
@@ -80,3 +81,4 @@ export default (props) => {
         </div>
     );
 };
+

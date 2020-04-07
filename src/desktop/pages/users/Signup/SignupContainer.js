@@ -1,6 +1,6 @@
-import "./less/signin.less"
+import "./less/signup.less"
 import React from "react";
-import Signin from './Signin'
+import Signup from './Signup'
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { Layout } from 'antd'
@@ -8,7 +8,7 @@ import QueueAnim from 'rc-queue-anim';
 
 
 
-const SigninContainer = (props) => {
+const SignupContainer = (props) => {
     const onLangChange = (e) => {
 
         props.langChange(e.target.value);
@@ -26,8 +26,8 @@ const SigninContainer = (props) => {
                 delay={100}
                 duration={1000}
                 type="bottom"
-                className="signin-wrap" >
-                <Signin key="signin"
+                className="signup-wrap" >
+                <Signup key="signup"
                     messages={props.intl.messages}
                     lang={props.lang}
                     onFormFinish={onFormFinish}
@@ -47,5 +47,5 @@ const mapDispatch = dispatch => ({
     langChange: dispatch.language.langChange,
 });
 
-export default injectIntl(connect(mapState, mapDispatch)(SigninContainer));
+export default injectIntl(connect(mapState, mapDispatch)(SignupContainer));
 
