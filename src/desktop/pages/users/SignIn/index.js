@@ -1,7 +1,10 @@
 import React from "react";
-import SignInContainer from './SignInContainer'
+
+import SigninContainer from './SigninContainer'
+
 export default (props) => {
     return (
-        <SignInContainer/>
+
+        <SigninContainer />
     );
 };

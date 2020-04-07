@@ -1,7 +1,9 @@
 import React from "react";
-import HomeContainer from './HomeContainer'
+
+import MyContainer from "./MyContainer"
+
 export default (props) => {
     return (
-        <HomeContainer />
+        <MyContainer />
     );
 };

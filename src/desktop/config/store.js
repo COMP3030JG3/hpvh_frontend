@@ -1,10 +1,11 @@
 import { init } from "@rematch/core";
-import { language } from '../models/language'
+import { language, my } from '../models'
 
 
 const store = init({
     models: {
         language,
+        my
     }
 });
 

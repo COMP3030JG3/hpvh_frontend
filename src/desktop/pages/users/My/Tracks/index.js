@@ -1,10 +1,9 @@
 import React from "react";
-import AboutContainer from './AboutContainer'
+
+import TracksContainer from "./TracksContainer"
+
 export default (props) => {
     return (
-        <AboutContainer />
+        <TracksContainer />
     );
 };
-
-
-
