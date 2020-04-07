@@ -66,8 +66,8 @@ export default (props) => {
                         </Button>
                         {languages["login.or"]}
                         <Button type="dash" className="login-form-button">
-                            <Link to="/signin">
-                                {languages["login.signin"]}
+                            <Link to="/signup">
+                                {languages["login.signup"]}
                             </Link>
                         </Button>
                     </Form.Item>
