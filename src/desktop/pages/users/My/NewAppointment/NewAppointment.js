@@ -19,7 +19,8 @@ const messages = {
     'my.NewAppointment.label.Address': "Address",
     'my.NewAppointment.label.PetBreed': "Pet Breed",
     'my.NewAppointment.label.PetGender': "Pet Gender",
-    'my.NewAppointment.label.PetStateDiscription': "Pet State Discription"
+    'my.NewAppointment.label.PetStateDiscription': "Pet State Discription",
+    'my.NewAppointment.label.PetPhoto': "Pet Photo"
 };
 
 export default (props) => {
@@ -31,6 +32,27 @@ export default (props) => {
         labelCol: { span: 8, },
         wrapperCol: { span: 16 },
     };
+
+
+    const prop = {
+        name: 'file',
+        action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+        headers: {
+          authorization: 'authorization-text',
+        },
+        onChange(info) {
+            if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+            }
+            if (info.file.status === 'done') {
+                message.success(`${info.file.name} file uploaded successfully`);
+            } 
+            else if (info.file.status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+      };
+
 
     const onFinish = values => {
         console.log(values);
@@ -77,6 +99,15 @@ export default (props) => {
                         
                         <Form.Item name="PetStateDiscription" label={languages["my.NewAppointment.label.PetStateDiscription"]}>
                             <Input.TextArea />
+                        </Form.Item>
+
+
+                        <Form.Item name="PetPhoto" label={languages["my.NewAppointment.label.PetPhoto"]}>
+                            <Upload {...prop}>
+                                <Button>
+                                    <UploadOutlined /> Click to Upload
+                                </Button>
+                            </Upload>
                         </Form.Item>
 
 
