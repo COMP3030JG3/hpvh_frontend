@@ -9,7 +9,11 @@ import {
 } from "antd"
 
 const messages = {
-    'my.profileEditor.label.fullName': "Full Name"
+    'my.profileEditor.label.userName': "User Name",
+    'my.profileEditor.label.password': "Password",
+    'my.profileEditor.label.email': "Email",
+    'my.profileEditor.label.phoneNumber': "Phone Number",
+    'my.profileEditor.label.address': "Address"
 };
 
 export default (props) => {
@@ -27,9 +31,6 @@ export default (props) => {
             email: '${label} is not validate email!',
             number: '${label} is not a validate number!',
         },
-        number: {
-            range: '${label} must be between ${min} and ${max}',
-        },
     };
 
 
@@ -43,20 +44,20 @@ export default (props) => {
                 <Col span={12} offset={6}>
 
                     <Form {...layout} labelAlign="right" name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
-                        <Form.Item name={['user', 'name']} label={languages["my.profileEditor.label.fullName"]} rules={[{ required: true }]}>
+                        <Form.Item name={['user', 'name']} label={languages["my.profileEditor.label.userName"]} rules={[{ required: true }]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email' }]}>
+                        <Form.Item name={['user', 'password']} label={languages["my.profileEditor.label.password"]} rules={[{ required: true }]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item name={['user', 'age']} label="Age" rules={[{ type: 'number', min: 0, max: 99 }]}>
+                        <Form.Item name={['user', 'email']} label={languages["my.profileEditor.label.email"]} rules={[{ type: 'email' }]}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item name={['user', 'number']} label={languages["my.profileEditor.label.phoneNumber"]} rules={[{ type: 'number' }]}>
                             <InputNumber />
                         </Form.Item>
-                        <Form.Item name={['user', 'website']} label="Website">
+                        <Form.Item name={['user', 'address']} label={languages["my.profileEditor.label.address"]}>
                             <Input />
-                        </Form.Item>
-                        <Form.Item name={['user', 'introduction']} label="Introduction">
-                            <Input.TextArea />
                         </Form.Item>
                         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
                             <Button type="primary" htmlType="submit">
