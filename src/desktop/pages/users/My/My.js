@@ -14,7 +14,6 @@ export default (props) => {
 
     const switchContent = (key) => {
         const AnimeContent = (props) => {
-            console.log(props.children)
             return (
                 <QueueAnim
                     delay={100}
