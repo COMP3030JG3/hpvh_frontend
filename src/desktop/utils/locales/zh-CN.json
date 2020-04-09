@@ -29,6 +29,7 @@
     "home.feature2.block.nav3": "问题3",
     "home.feature2.block.title3": "问题标题3",
     "home.feature2.block.content3": "问题内容3",
+    "//": "--------------------------------------------------------",
     "login.username": "用户名",
     "login.requsername": "请输入用户名！",
     "login.password": "密码",
@@ -37,5 +38,12 @@
     "login.forgot": "忘记密码？",
     "login.or": "或者",
     "login.loginbutton": "登录",
-    "login.signup": "注册"
+    "login.signup": "注册",
+    "//": "---------------------------------------------------------------",
+    "my.profile.iconTip.language": "语言",
+    "my.profile.iconTip.edit": "编辑",
+    "my.profile.iconTip.logOut": "退出",
+    "my.profile.menu.appointments": "我的预约",
+    "my.profile.menu.tracks": "我的治疗",
+    "my.profile.menu.newAppointment": "新的预约"
 }

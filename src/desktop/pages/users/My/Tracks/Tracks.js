@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Row,
     Col,
     Table,
     Tag,
-    Button
+    Button,
+    Drawer
 } from "antd"
 const { Column, ColumnGroup } = Table;
 
@@ -22,12 +23,14 @@ const messages = {
 
 const data = [
     {
-
+        key: "1"
 
     },
 ];
 
 export default (props) => {
+
+    const [showDrawer, setShowDrawer] = useState(false);
 
     const languages = messages;
 
@@ -35,7 +38,13 @@ export default (props) => {
         console.log(values);
     };
 
-
+    const onMoreClick = (records) => {
+        console.log(records);
+        setShowDrawer(true);
+    }
+    const onDrawerClose = () => {
+        setShowDrawer(false);
+    }
 
     return (
         <div>
@@ -50,12 +59,25 @@ export default (props) => {
                         <Column title={languages["my.tracks.colTitle.releaseTime"]} dataIndex="releaseTime" key="releaseTime" />
                         <Column title={languages["my.tracks.colTitle.livingDuration"]} dataIndex="livingDuration" key="livingDuration" />
                         <Column title="" render={record => (
-                            <Button type="link">{languages["my.tracks.row.more"]}</Button>
+                            <Button type="link" onClick={(e) => (onMoreClick(record))}>{languages["my.tracks.row.more"]}</Button>
                         )
                         } />
                     </Table>
                 </Col>
             </Row>
+
+            <Drawer
+                title="Basic Drawer"
+                placement='left'
+                closable={false}
+                onClose={onDrawerClose}
+                visible={showDrawer}
+            >
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+            </Drawer>
+
         </div>
     );
 };
