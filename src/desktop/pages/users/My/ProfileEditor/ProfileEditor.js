@@ -28,8 +28,7 @@ export default (props) => {
     const validateMessages = {
         required: '${label} is required!',
         types: {
-            email: '${label} is not validate email!',
-            number: '${label} is not a validate number!',
+            email: '${label} is not validate email!'
         },
     };
 
@@ -41,7 +40,7 @@ export default (props) => {
     return (
         <div>
             <Row>
-                <Col span={12} offset={6}>
+                <Col span={12} offset={5}>
 
                     <Form {...layout} labelAlign="right" name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
                         <Form.Item name={['user', 'name']} label={languages["my.profileEditor.label.userName"]} rules={[{ required: true }]}>
@@ -53,13 +52,13 @@ export default (props) => {
                         <Form.Item name={['user', 'email']} label={languages["my.profileEditor.label.email"]} rules={[{ type: 'email' }]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item name={['user', 'number']} label={languages["my.profileEditor.label.phoneNumber"]} rules={[{ type: 'number' }]}>
-                            <InputNumber />
+                        <Form.Item name={['user', 'number']} label={languages["my.profileEditor.label.phoneNumber"]} >
+                            <Input />
                         </Form.Item>
                         <Form.Item name={['user', 'address']} label={languages["my.profileEditor.label.address"]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+                        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 14 }}>
                             <Button type="primary" htmlType="submit">
                                 Submit
                     </Button>
