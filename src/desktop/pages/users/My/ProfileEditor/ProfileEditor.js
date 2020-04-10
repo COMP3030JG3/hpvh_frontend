@@ -13,7 +13,8 @@ const messages = {
     'my.profileEditor.label.password': "Password",
     'my.profileEditor.label.email': "Email",
     'my.profileEditor.label.phoneNumber': "Phone Number",
-    'my.profileEditor.label.address': "Address"
+    'my.profileEditor.label.address': "Address",
+    'my.profileEditor.button.submit': "Submit"
 };
 
 export default (props) => {
@@ -43,26 +44,24 @@ export default (props) => {
                 <Col span={12} offset={5}>
 
                     <Form {...layout} labelAlign="right" name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
-                        <Form.Item name={['user', 'name']} label={languages["my.profileEditor.label.userName"]} rules={[{ required: true }]}>
+                        <Form.Item name={'name'} label={languages["my.profileEditor.label.userName"]} rules={[{ required: true }]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item name={['user', 'password']} label={languages["my.profileEditor.label.password"]} rules={[{ required: true }]}>
+                        <Form.Item name={'password'} label={languages["my.profileEditor.label.password"]} rules={[{ required: true }]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item name={['user', 'email']} label={languages["my.profileEditor.label.email"]} rules={[{ type: 'email' }]}>
+                        <Form.Item name={'email'} label={languages["my.profileEditor.label.email"]} rules={[{ type: 'email' }]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item name={['user', 'number']} label={languages["my.profileEditor.label.phoneNumber"]} >
+                        <Form.Item name={'number'} label={languages["my.profileEditor.label.phoneNumber"]} >
                             <Input />
                         </Form.Item>
-                        <Form.Item name={['user', 'address']} label={languages["my.profileEditor.label.address"]}>
+                        <Form.Item name={'address'} label={languages["my.profileEditor.label.address"]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 14 }}>
-                            <Button type="primary" htmlType="submit">
-                                Submit
-                    </Button>
-                        </Form.Item>
+                        <Button type="primary" htmlType="submit" style={{display:"block",margin:"0 auto"}}>
+                            {languages["my.profileEditor.button.submit"]}
+                        </Button>
                     </Form>
 
                 </Col>
