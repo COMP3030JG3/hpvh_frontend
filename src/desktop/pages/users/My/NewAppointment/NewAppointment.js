@@ -16,7 +16,7 @@ import { UploadOutlined } from '@ant-design/icons';
 
 const messages = {
     'my.NewAppointment.label.petName': "Pet Name",
-    'my.NewAppointment.label.address': "Address",
+    'my.NewAppointment.label.meetingAddress': "Meenting Address",
     'my.NewAppointment.label.petBreed': "Pet Breed",
     'my.NewAppointment.label.petGender': "Pet Gender",
     'my.NewAppointment.label.petStateDiscription': "Pet State Discription",
@@ -100,7 +100,7 @@ export default (props) => {
                         
 
 
-                        <Form.Item name="address" label={languages["my.NewAppointment.label.address"]} rules={[{ required: true, message: 'Please select address!' }]}>
+                        <Form.Item name="meetingAddress" label={languages["my.NewAppointment.label.meetingAddress"]} rules={[{ required: true, message: 'Please select address!' }]}>
                             <Select placeholder="Select Place">
                                 <Option value="beijing">BeiJing</Option>
                                 <Option value="shanghai">ShangHai</Option>
