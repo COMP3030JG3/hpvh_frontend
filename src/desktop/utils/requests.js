@@ -1,5 +1,11 @@
 import axios from 'axios';
 
-export default axios.create({
-    baseURL: 'http://mock-api.com/3gl8GPgO.mock/api'
+import { getCookie, setCookie } from './cookies'
+export const request = axios.create({
+    baseURL: '/api'
+});
+
+export const authRequest = axios.create({
+    baseURL: '/api',
+    headers: { "Authorization": `Bearer ${getCookie("token")}` }
 });
