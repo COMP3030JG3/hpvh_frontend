@@ -21,13 +21,14 @@ const messages = {
     'my.appointments.title.appointmentDate': "AppointmentDate",
     'my.appointments.title.details': "Details",
     'my.appointments.title.doctorAdvice': "DoctorAdvice",
-    'my.appointments.title.drawers': "Drawers"  ,
+    'my.appointments.title.drawers': "Drawers",
+    'my.appointments.title.orderNumber': "No.",
 };
 
 const { Column } = Table;
 const data = [
     {
-      key: '1',
+      orderNumber: '1',
       customerName: 'John',
       petName: 'Kitty',
       petGender: 'Male',
@@ -39,7 +40,7 @@ const data = [
       appointmentDate: '2020.1.31'
     },
     {
-      key: '2',
+      orderNumber: '2',
       customerName: 'Zhang San',
       petName: 'Wang Cai',
       petGender: 'Male',
@@ -51,7 +52,7 @@ const data = [
       appointmentDate: '2020.4.29'
     },
     {
-      key: '3',
+      orderNumber: '3',
       customerName: 'John',
       petName: 'Kitty',
       petGender: 'Male',
@@ -94,14 +95,14 @@ export default (props) => {
                     <Table dataSource={data}
                         pagination={{position:['bottomcenter']}}
                     >
-                        <Column title="" dataIndex="image" key="image" />
-                        <Column title={languages["my.appointments.title.petName"]} dataIndex="petName" key="petName" />
-                        <Column title={languages["my.appointments.title.petGender"]} dataIndex="petGender" key="petGender" />
-                        <Column title={languages["my.appointments.title.species"]} dataIndex="species" key="species" />
-                        <Column title={languages["my.appointments.title.address"]} dataIndex="address" key="address" />
-                        <Column title={languages["my.appointments.title.description"]} dataIndex="description" key="description" />
-                        <Column title={languages["my.appointments.title.surgeryTime"]} dataIndex="surgeryTime" key="surgeryTime" />
-                        <Column title={languages["my.appointments.title.appointmentDate"]} dataIndex="appointmentDate" key="appointmentDate" />
+                        <Column ellipsis={true} title={languages["my.appointments.title.orderNumber"]} dataIndex="orderNumber" key="orderNumber" />
+                        <Column ellipsis={true} title="" dataIndex="image" key="image" />
+                        <Column ellipsis={true} title={languages["my.appointments.title.petName"]} dataIndex="petName" key="petName" />
+                        <Column ellipsis={true} title={languages["my.appointments.title.petGender"]} dataIndex="petGender" key="petGender" />
+                        <Column ellipsis={true} title={languages["my.appointments.title.species"]} dataIndex="species" key="species" />
+                        <Column ellipsis={true} title={languages["my.appointments.title.address"]} dataIndex="address" key="address" />
+                        <Column ellipsis={true} title={languages["my.appointments.title.appointmentDate"]} dataIndex="appointmentDate" key="appointmentDate" />
+                        <Column ellipsis={true} title={languages["my.appointments.title.surgeryTime"]} dataIndex="surgeryTime" key="surgeryTime" />
                         <Column title="" render={record =>(
                             <Button type="link" onClick={(e) =>(onMoreClick(record))}>{languages["my.appointments.title.details"]}</Button>
                         )
