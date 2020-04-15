@@ -7,7 +7,7 @@ export const Nav30DataSource = {
     page: { className: 'home-page k87mate2qet-editor_css' },
     logo: {
         className: 'header3-logo jzjgnya1gmn-editor_css',
-        children: 'https://s1.ax1x.com/2020/03/29/GVqwRJ.png',
+        children: '/logo.svg',
     },
     Menu: {
         className: 'header3-menu',

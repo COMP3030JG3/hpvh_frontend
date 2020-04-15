@@ -3,7 +3,7 @@ import React from 'react';
 import { Provider, connect } from 'react-redux';
 import { IntlProvider, injectIntl } from 'react-intl';
 import { ConfigProvider } from 'antd';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.less';
 import { store } from './config/store';
 import { language } from './config/intl'
 import AppRouter from './routes/AppRouter';

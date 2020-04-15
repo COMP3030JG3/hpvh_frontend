@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: '/api'
+    baseURL: 'http://mock-api.com/3gl8GPgO.mock/api'
 });

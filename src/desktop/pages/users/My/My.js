@@ -14,7 +14,6 @@ export default (props) => {
 
     const switchContent = (key) => {
         const AnimeContent = (props) => {
-            console.log(props.children)
             return (
                 <QueueAnim
                     delay={100}
@@ -22,7 +21,7 @@ export default (props) => {
                     type="left"
                 >
                     <div key={props.children.key}>
-                        <Card>
+                        <Card bordered={false} className="antCard" hoverable={true} style={{ cursor: 'default' }}>
                             {props.children}
                         </Card>
                     </div>
@@ -46,7 +45,7 @@ export default (props) => {
 
     return (
         <div className="my">
-            <Row>
+            <Row >
                 <Col span={24}>
                     <QueueAnim
                         delay={100}
@@ -54,7 +53,7 @@ export default (props) => {
                         type="top"
                     >
                         <div key="image">
-                            <img width="250px" src="https://s1.ax1x.com/2020/03/29/GVqwRJ.png" alt="img"></img>
+                            <img width="350px" height="60px" src="/logo.svg" style={{ margin: "24px" }}></img>
                         </div>
                     </QueueAnim>
                 </Col>
@@ -88,6 +87,7 @@ export default (props) => {
                     </QueueAnim>
                 </Col>
             </Row>
+
         </div >
     );
 };

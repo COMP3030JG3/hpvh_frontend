@@ -29,7 +29,7 @@ const LoginContainer = (props) => {
                 type="bottom"
             >
                 <div key="login" className="login-wrap">
-                    <img width="250px" src="https://s1.ax1x.com/2020/03/29/GVqwRJ.png" alt="img"></img>
+                    <img width="250px" src="/logo.svg" alt="img" style={{ margin: "16px" }}></img>
                     <Login
                         messages={props.intl.messages}
                         lang={props.lang}

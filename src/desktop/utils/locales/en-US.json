@@ -29,6 +29,7 @@
     "home.feature2.block.nav3": "Question3",
     "home.feature2.block.title3": "Question title3",
     "home.feature2.block.content3": "content3",
+    "//": "---------------------------------------------------------------",
     "login.username": "Username",
     "login.requsername": "Username is empty!",
     "login.password": "Password",
@@ -37,5 +38,12 @@
     "login.forgot": "Forgot password?",
     "login.or": "Or",
     "login.loginbutton": "Login",
-    "login.signup": "Sign Up"
+    "login.signup": "Sign Up",
+    "//": "---------------------------------------------------------------",
+    "my.profile.iconTip.language": "Language",
+    "my.profile.iconTip.edit": "Edit",
+    "my.profile.iconTip.logOut": "Log Out",
+    "my.profile.menu.appointments": "My Appointments",
+    "my.profile.menu.tracks": "Track My Treatments",
+    "my.profile.menu.newAppointment": "Make New Appointment"
 }

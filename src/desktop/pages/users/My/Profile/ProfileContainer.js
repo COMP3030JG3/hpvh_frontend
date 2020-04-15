@@ -5,8 +5,7 @@ import { injectIntl } from 'react-intl';
 
 const ProfileContainer = (props) => {
     const onLangChange = (e) => {
-        console.log(e)
-        // props.langChange(e.target.value);
+        props.langChange(e.key);
     }
 
     const onMenuClick = (e) => {
@@ -30,6 +29,7 @@ const ProfileContainer = (props) => {
 
     return (
         <Profile
+            messages={props.intl.messages}
             data={data}
             menuKey={props.myContent}
             onMenuClick={onMenuClick}
