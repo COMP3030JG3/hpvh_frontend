@@ -24,7 +24,7 @@ const messages = {
 
 export default (props) => {
 
-    const languages = messages;
+    const languages = props.messages;
 
     const layout = {
         labelCol: { span: 8, },
@@ -41,6 +41,7 @@ export default (props) => {
 
     const onFinish = values => {
         console.log(values);
+        props.onFinish();
     };
 
 
@@ -69,18 +70,18 @@ export default (props) => {
 
                 </Col>
                 <Col offset={14}>
-                    <App />
+                    <Change />
                 </Col>
             </Row>
         </div>
     );
 };
 
-const languages = messages;
+const languages = props.messages;
 const validateMessages = {
     required: '${label} is required!'
 };
-class App extends React.Component {
+class Change extends React.Component {
 
   state = { visible: false };
 
@@ -90,14 +91,14 @@ class App extends React.Component {
     });
   };
 
-  handleOk = e => {
+  onOk = e => {
     console.log(e);
     this.setState({
       visible: false,
     });
   };
 
-  handleCancel = e => {
+  onCancel = e => {
     this.setState({
       visible: false,
     });
