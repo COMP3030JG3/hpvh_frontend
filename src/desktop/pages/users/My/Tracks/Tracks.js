@@ -52,14 +52,14 @@ export default (props) => {
                         onChange={props.onPageChange}
                         pagination={{ defaultCurrent: data.index, total: data.total, simple: true, pageSize: data.count }}
                     >
-                        <Column title={languages["my.tracks.colTitle.trackId"]} dataIndex="trackId" key="trackId" />
-                        <Column title={languages["my.tracks.colTitle.petName"]} dataIndex="petName" key="petName" />
-                        <Column title={languages["my.tracks.colTitle.sex"]} dataIndex="sex" key="sex" />
-                        <Column title={languages["my.tracks.colTitle.status"]} dataIndex="status" key="status" />
-                        <Column title={languages["my.tracks.colTitle.livingDuration"]} dataIndex="livingDuration" key="livingDuration" />
-                        <Column title={languages["my.tracks.colTitle.beginTime"]} dataIndex="beginTime" key="beginTime" />
-                        <Column title={languages["my.tracks.colTitle.releaseTime"]} dataIndex="releaseTime" key="releaseTime" />
-                        <Column title="" render={record => (
+                        <Column ellipsis={true} title={languages["my.tracks.colTitle.trackId"]} dataIndex="trackId" key="trackId" />
+                        <Column ellipsis={true} title={languages["my.tracks.colTitle.petName"]} dataIndex="petName" key="petName" />
+                        <Column ellipsis={true} title={languages["my.tracks.colTitle.sex"]} dataIndex="sex" key="sex" />
+                        <Column ellipsis={true} title={languages["my.tracks.colTitle.status"]} dataIndex="status" key="status" />
+                        <Column ellipsis={true} title={languages["my.tracks.colTitle.livingDuration"]} dataIndex="livingDuration" key="livingDuration" />
+                        <Column ellipsis={true} title={languages["my.tracks.colTitle.beginTime"]} dataIndex="beginTime" key="beginTime" />
+                        <Column ellipsis={true} title={languages["my.tracks.colTitle.releaseTime"]} dataIndex="releaseTime" key="releaseTime" />
+                        <Column ellipsis={true} title="" render={record => (
                             <Button type="link" onClick={(e) => (onMoreClick(record))}>{languages["my.tracks.row.more"]}</Button>)}
                         />
                     </Table>

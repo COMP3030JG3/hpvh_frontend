@@ -1,4 +1,4 @@
-import requests from '../utils/requests'
+//import { request } from '../utils/request'
 export const my = {
     state: {
         myContent: "appointments",
@@ -19,18 +19,7 @@ export const my = {
 
     effects: {
         async getTracks(payload, rootState) {
-            await requests.get('/tracks/' + payload, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(
-                    (response) => {
 
-                        this.getTracksReducer(JSON.parse(JSON.stringify(response.data.data)))
-                        this.setFirstLoading(false);
-                    }
-                )
         }
     }
 }
