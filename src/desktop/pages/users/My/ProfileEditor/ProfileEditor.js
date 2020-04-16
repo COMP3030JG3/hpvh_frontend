@@ -77,7 +77,7 @@ export default (props) => {
     );
 };
 
-const languages = props.messages;
+const languages = messages;
 const validateMessages = {
     required: '${label} is required!'
 };
@@ -113,8 +113,8 @@ class Change extends React.Component {
         <Modal
           title={languages["my.profileEditor.title.change"]}
           visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          onOk={this.onOk}
+          onCancel={this.onCancel}
         >
         <Form onSubmit={this.handleOk} validateMessages={validateMessages}>
             <Form.Item name={'oldPassword'} label={languages["my.profileEditor.label.oldPassword"]} rules={[{ required: true }]}>
