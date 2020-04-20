@@ -8,7 +8,7 @@ const NewAppointmentContainer = (props) => {
     const data = {}
 
     return (
-        <NewAppointment />
+        <NewAppointment messages={props.intl.messages} />
     );
 };
 
