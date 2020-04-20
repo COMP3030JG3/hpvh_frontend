@@ -7,28 +7,18 @@ import {
     Button,
     Select,
     Radio,
-    Upload, 
+    Upload,
     message,
     DatePicker
 } from "antd";
 import { UploadOutlined } from '@ant-design/icons';
 
 
-const messages = {
-    'my.NewAppointment.label.petName': "Pet Name",
-    'my.NewAppointment.label.meetingAddress': "Meenting Address",
-    'my.NewAppointment.label.petBreed': "Pet Breed",
-    'my.NewAppointment.label.petGender': "Pet Gender",
-    'my.NewAppointment.label.petStateDiscription': "Pet State Discription",
-    'my.NewAppointment.label.petPhoto': "Pet Photo",
-    'my.NewAppointment.label.emergencyContact': "Emergency Contact",
-    'my.NewAppointment.label.appointmentDate': "Appointment Date",
-    'my.NewAppointment.label.submit': "Submit"
-};
+
 
 export default (props) => {
-    
-    const languages = messages;
+
+    const languages = props.messages;
 
 
     const layout = {
@@ -77,44 +67,44 @@ export default (props) => {
             <Row>
                 <Col span={12} offset={6}>
 
-                    <Form {...layout} labelAlign="right" name="nest-messages" onFinish={onFinish}>
-                        <Form.Item name="petName" label={languages["my.NewAppointment.label.petName"]} rules={[{ required: true, message: 'Pet name is required!' }]}>
+                    <Form {...layout} labelAlign="left" name="nest-messages" onFinish={onFinish}>
+                        <Form.Item name="petName" label={languages["my.NewAppointment.colTitle.petName"]} rules={[{ required: true, message: 'Pet name is required!' }]}>
                             <Input />
                         </Form.Item>
 
 
-                        <Form.Item name="petGreed" label={languages["my.NewAppointment.label.petBreed"]} rules={[{ required: true, message: 'Please select pet kind!' }]}>
-                            <Radio.Group>
-                                <Radio value="dog">Dog</Radio>
-                                <Radio value="cat">Cat</Radio>
+                        <Form.Item name="species" label={languages["my.NewAppointment.colTitle.species"]} rules={[{ required: true, message: 'Please select pet kind!' }]}>
+                            <Radio.Group buttonStyle="solid">
+                                <Radio.Button value="dog">Dog</Radio.Button>
+                                <Radio.Button value="cat">Cat</Radio.Button>
                             </Radio.Group>
                         </Form.Item>
 
 
-                        <Form.Item name="petGender" label={languages["my.NewAppointment.label.petGender"]} rules={[{ required: true, message: 'Please select pet Gender!' }]}>
-                            <Radio.Group>
-                                <Radio value="male">Male</Radio>
-                                <Radio value="female">Female</Radio>
+                        <Form.Item name="gender" label={languages["my.NewAppointment.colTitle.gender"]} rules={[{ required: true, message: 'Please select pet Gender!' }]}>
+                            <Radio.Group buttonStyle="solid">
+                                <Radio.Button value="male">Male</Radio.Button>
+                                <Radio.Button value="female">Female</Radio.Button>
                             </Radio.Group>
                         </Form.Item>
-                        
 
 
-                        <Form.Item name="meetingAddress" label={languages["my.NewAppointment.label.meetingAddress"]} rules={[{ required: true, message: 'Please select address!' }]}>
-                            <Select placeholder="Select Place">
-                                <Option value="beijing">BeiJing</Option>
-                                <Option value="shanghai">ShangHai</Option>
-                                <Option value="chengdu">ChengDu</Option>
-                            </Select>
+
+                        <Form.Item name="meetingCity" label={languages["my.NewAppointment.colTitle.meetingCity"]} rules={[{ required: true, message: 'Please select address!' }]}>
+                            <Radio.Group buttonStyle="solid">
+                                <Radio.Button value="beijing">BeiJing</Radio.Button>
+                                <Radio.Button value="shanghai">ShangHai</Radio.Button>
+                                <Radio.Button value="chengdu">ChengDu</Radio.Button>
+                            </Radio.Group>
                         </Form.Item>
 
-                        
-                        <Form.Item name="petStateDiscription" label={languages["my.NewAppointment.label.petStateDiscription"]}>
+
+                        <Form.Item name="description" label={languages["my.NewAppointment.colTitle.description"]}>
                             <Input.TextArea />
                         </Form.Item>
 
 
-                        {/* <Form.Item name="petPhoto" label={languages["my.NewAppointment.label.petPhoto"]}>
+                        {/* <Form.Item name="petPhoto" label={languages["my.NewAppointment.colTitle.petPhoto"]}>
                             <Upload {...prop}>
                                 <Button>
                                     <UploadOutlined /> Click to Upload
@@ -122,25 +112,25 @@ export default (props) => {
                             </Upload>
                         </Form.Item> */}
 
-                        
 
-                        <Form.Item name="emergencyContact" label={languages["my.NewAppointment.label.emergencyContact"]} rules={[{ required: true, message: 'Please input your emergency contact number!' }]}>
+
+                        <Form.Item name="contactNumber" label={languages["my.NewAppointment.colTitle.contactNumber"]} rules={[{ required: true, message: 'Please input your emergency contact number!' }]}>
                             <Input />
                         </Form.Item>
 
 
-                        
-                        <Form.Item name="appointmentDate" label={languages["my.NewAppointment.label.appointmentDate"]} rules={[{ required: true, message: 'Please Select your appointment date!' }]}>
-                            <DatePicker showTime onChange={onChange} onOk={onOk} />
+
+                        <Form.Item name="appointmentTime" label={languages["my.NewAppointment.colTitle.appointmentTime"]} rules={[{ required: true, message: 'Please Select your appointment date!' }]}>
+                            <DatePicker onChange={onChange} onOk={onOk} />
                         </Form.Item>
 
 
-               
-                        
-                        <Button type="primary" style={{display:"block", margin:"0 auto"}}   htmlType="submit">
-                            {languages["my.NewAppointment.label.submit"]}
+
+
+                        <Button type="primary" style={{ display: "block", margin: "0 auto" }} htmlType="submit">
+                            {languages["my.NewAppointment.colTitle.submit"]}
                         </Button>
-                        
+
                     </Form>
                 </Col>
             </Row>
