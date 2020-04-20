@@ -50,15 +50,7 @@ export default (props) => {
 
                         />
                     </Form.Item>
-                    <Form.Item>
-                        <Form.Item name="remember" valuePropName="checked" noStyle>
-                            <Checkbox>{languages["login.remember"]}</Checkbox>
-                        </Form.Item>
 
-                        <Link className="login-form-right" to="">
-                            {languages["login.forgot"]}
-                        </Link>
-                    </Form.Item>
 
                     <Form.Item>
                         <Button type="primary" htmlType="submit" className="login-form-button">
