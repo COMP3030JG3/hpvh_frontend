@@ -9,30 +9,19 @@ import {
     Modal
 } from "antd"
 
-const messages = {
-    'my.profileEditor.label.fullName': "Full Name",
-    'my.profileEditor.label.oldPassword': "Old Password",
-    'my.profileEditor.label.email': "Email",
-    'my.profileEditor.label.phoneNumber': "Phone Number",
-    'my.profileEditor.label.address': "Address",
-    'my.profileEditor.button.submit': "Submit",
-    'my.profileEditor.button.change': "Change Password?",
-    'my.profileEditor.title.change':"Change Password",
-    'my.profileEditor.label.password': "New Password",
-    'my.profileEditor.label.confirm': "Confirm Password"
-};
+
 
 export default (props) => {
 
-    const languages = messages;
+    const languages = props.messages;
 
     const layout = {
-        labelCol: { span: 8, },
-        wrapperCol: { span: 16 },
+        labelCol: { span: 5, },
+        wrapperCol: { span: 19 },
     };
 
     const validateMessages = {
-        required: '${label} is required!',
+
         types: {
             email: '${label} is not validate email!'
         },
@@ -41,16 +30,17 @@ export default (props) => {
 
     const onFinish = values => {
         console.log(values);
+        props.onFinish();
     };
 
 
     return (
         <div>
             <Row>
-                <Col span={12} offset={5}>
+                <Col span={14} offset={5}>
 
-                    <Form {...layout} labelAlign="right" name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
-                        <Form.Item name={'name'} label={languages["my.profileEditor.label.fullName"]} rules={[{ required: true }]}>
+                    <Form labelAlign="left" {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+                        <Form.Item name={'name'} label={languages["my.profileEditor.label.fullName"]} >
                             <Input />
                         </Form.Item>
                         <Form.Item name={'email'} label={languages["my.profileEditor.label.email"]} rules={[{ type: 'email' }]}>
@@ -62,84 +52,101 @@ export default (props) => {
                         <Form.Item name={'address'} label={languages["my.profileEditor.label.address"]}>
                             <Input />
                         </Form.Item>
-                        <Button type="primary" htmlType="submit" style={{display:"block",margin:"0 auto"}}>
+                        <Button type="primary" htmlType="submit" style={{ display: "block", margin: "0 auto" }}>
                             {languages["my.profileEditor.button.submit"]}
                         </Button>
                     </Form>
 
                 </Col>
                 <Col offset={14}>
-                    <App />
+                    <Change {...props} />
                 </Col>
             </Row>
         </div>
     );
 };
 
-const languages = messages;
+
 const validateMessages = {
     required: '${label} is required!'
 };
-class App extends React.Component {
+class Change extends React.Component {
 
-  state = { visible: false };
+    layout = {
+        labelCol: { span: 6, },
+        wrapperCol: { span: 18 },
+    };
 
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  };
+    state = { visible: false };
 
-  handleOk = e => {
-    console.log(e);
-    this.setState({
-      visible: false,
-    });
-  };
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
 
-  handleCancel = e => {
-    this.setState({
-      visible: false,
-    });
-  };
+    onOk = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
 
-  render() {
-    return (
-      <div>
-        <Button type="link" onClick={this.showModal}>
-          {languages["my.profileEditor.button.change"]}
-        </Button>
-        <Modal
-          title={languages["my.profileEditor.title.change"]}
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-        >
-        <Form onSubmit={this.handleOk} validateMessages={validateMessages}>
-            <Form.Item name={'oldPassword'} label={languages["my.profileEditor.label.oldPassword"]} rules={[{ required: true }]}>
-                <Input />
-            </Form.Item>
-            <Form.Item name="password" label={languages["my.profileEditor.label.password"]} rules={[{required: true,message: 'Please input your password!',},]}hasFeedback>
-                <Input.Password />
-            </Form.Item>
+    onFinish = e => {
+        this.props.changePassword(e);
+    }
 
-            <Form.Item name="confirm" label={languages["my.profileEditor.label.confirm"]} dependencies={['password']} hasFeedback rules={[{required: true,message: 'Please confirm your password!',},
-                ({ getFieldValue }) => ({
-                    validator(rule, value) {
-                    if (!value || getFieldValue('password') === value) {
-                    return Promise.resolve();
-                    }
-                    return Promise.reject('The two passwords that you entered do not match!');
-                    },
-                }),
-            ]}
-            >
-            <Input.Password />
-        </Form.Item>
-        </Form>
 
-        </Modal>
-      </div>
-    );
-  }
+    onCancel = e => {
+        this.setState({
+            visible: false,
+        });
+    };
+
+    render() {
+        const languages = this.props.messages;
+
+        return (
+            <div>
+                <Button type="link" onClick={this.showModal}>
+                    {languages["my.profileEditor.button.change"]}
+                </Button>
+                <Modal
+                    title={languages["my.profileEditor.title.change"]}
+                    visible={this.state.visible}
+                    onOk={this.onOk}
+                    onCancel={this.onCancel}
+                    width="40%"
+                    footer={null}
+                >
+                    <Form {...this.layout} onFinish={this.onFinish} validateMessages={validateMessages}>
+                        <Form.Item name={'oldPassword'} label={languages["my.profileEditor.label.oldPassword"]} rules={[{ required: true }]}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item name="password" label={languages["my.profileEditor.label.password"]} rules={[{ required: true, message: 'Please input your password!', },]} hasFeedback>
+                            <Input.Password />
+                        </Form.Item>
+
+                        <Form.Item name="confirm" label={languages["my.profileEditor.label.confirm"]} dependencies={['password']} hasFeedback rules={[{ required: true, message: 'Please confirm your password!', },
+                        ({ getFieldValue }) => ({
+                            validator(rule, value) {
+                                if (!value || getFieldValue('password') === value) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject('The two passwords that you entered do not match!');
+                            },
+                        }),
+                        ]}
+                        >
+                            <Input.Password />
+                        </Form.Item>
+                        <Button type="primary" htmlType="submit" style={{ display: "block", margin: "0 auto" }}>
+                            {languages["dashBoard.appointments.modal.submit"] || "submit"}
+                        </Button>
+                    </Form>
+
+                </Modal>
+            </div>
+        );
+    }
 }

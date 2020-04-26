@@ -124,7 +124,7 @@ export const Banner50DataSource = {
     image: {
         className: 'banner5-image',
         children:
-            'http://pic.90sjimg.com/design/01/29/90/85/59157c1d26c42.png!/fwfh/375x552/quality/90/unsharp/true/compress/true/watermark/url/LzkwX3dhdGVyX3Y2LnBuZw==/repeat/true',
+            '/assets/banner.png',
     },
 };
 export const Feature30DataSource = {
@@ -168,7 +168,7 @@ export const Feature30DataSource = {
                     icon: {
                         className: 'content3-icon',
                         children:
-                            'https://zos.alipayobjects.com/rmsportal/ScHBSdwpTkAHZkJ.png',
+                            '/assets/feature_cat.png',
                     },
                     textWrapper: { className: 'content3-text' },
                     title: {
@@ -202,7 +202,7 @@ export const Feature30DataSource = {
                     icon: {
                         className: 'content3-icon',
                         children:
-                            'https://zos.alipayobjects.com/rmsportal/NKBELAOuuKbofDD.png',
+                            '/assets/feature_cat.png',
                     },
                     textWrapper: { className: 'content3-text' },
                     title: {
@@ -238,7 +238,7 @@ export const Feature30DataSource = {
                     icon: {
                         className: 'content3-icon',
                         children:
-                            'https://zos.alipayobjects.com/rmsportal/xMSBjgxBhKfyMWX.png',
+                            '/assets/feature_cat.png',
                     },
                     textWrapper: { className: 'content3-text' },
                     title: {
@@ -270,7 +270,7 @@ export const Feature30DataSource = {
                     icon: {
                         className: 'content3-icon',
                         children:
-                            'https://zos.alipayobjects.com/rmsportal/MNdlBNhmDBLuzqp.png',
+                            '/assets/feature_dog.png',
                     },
                     textWrapper: { className: 'content3-text' },
                     title: {
@@ -302,7 +302,7 @@ export const Feature30DataSource = {
                     icon: {
                         className: 'content3-icon',
                         children:
-                            'https://zos.alipayobjects.com/rmsportal/UsUmoBRyLvkIQeO.png',
+                            '/assets/feature_dog.png',
                     },
                     textWrapper: { className: 'content3-text' },
                     title: {
@@ -334,7 +334,7 @@ export const Feature30DataSource = {
                     icon: {
                         className: 'content3-icon',
                         children:
-                            'https://zos.alipayobjects.com/rmsportal/ipwaQLBLflRfUrg.png',
+                            '/assets/feature_dog.png',
                     },
                     textWrapper: { className: 'content3-text' },
                     title: {

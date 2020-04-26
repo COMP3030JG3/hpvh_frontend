@@ -8,7 +8,7 @@ const ProfileContainer = (props) => {
         'profileEditor.title': "Titsdfsle"
     };
     return (
-        <ProfileEditor messages={messages} />
+        <ProfileEditor messages={props.intl.messages} />
     );
 };
 
