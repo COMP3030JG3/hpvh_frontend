@@ -7,6 +7,9 @@ import Login from '../pages/users/Login';
 import My from '../pages/users/My';
 import history from './history';
 import { getCookie } from '../utils/cookies'
+import DashBoard from '../pages/admin/DashBoard';
+import Discussion from '../pages/Discussion';
+
 class AppRouter extends React.Component {
 
 
@@ -40,6 +43,8 @@ class AppRouter extends React.Component {
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/signup" component={Signup} />
                     <PrivateRoute exact path="/my" ><My /></PrivateRoute>
+                    <Route exact path="/dashboard" component={DashBoard} />
+                    <Route exact path="/discussion" history={history} component={Discussion} />
                     <Route exact path="/" component={Home} />
                 </Switch>
             </Router>
