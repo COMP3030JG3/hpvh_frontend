@@ -68,9 +68,15 @@ export default (props) => {
                 <Col span={12} offset={6}>
 
                     <Form {...layout} labelAlign="left" name="nest-messages" onFinish={onFinish}>
+                        <Form.Item name="historyPet" label={"History Pet"} >
+                            <Select style={{ width: 120 }} >
+                                <Option value="lucy">Lucy</Option>
+                            </Select>
+                        </Form.Item>
                         <Form.Item name="petName" label={languages["my.NewAppointment.colTitle.petName"]} rules={[{ required: true, message: 'Pet name is required!' }]}>
                             <Input />
                         </Form.Item>
+
 
 
                         <Form.Item name="species" label={languages["my.NewAppointment.colTitle.species"]} rules={[{ required: true, message: 'Please select pet kind!' }]}>
@@ -104,13 +110,13 @@ export default (props) => {
                         </Form.Item>
 
 
-                        {/* <Form.Item name="petPhoto" label={languages["my.NewAppointment.colTitle.petPhoto"]}>
-                            <Upload {...prop}>
+                        <Form.Item name="petPhoto" label={languages["my.NewAppointment.colTitle.petPhoto"]}>
+                            <Upload >
                                 <Button>
                                     <UploadOutlined /> Click to Upload
                                 </Button>
                             </Upload>
-                        </Form.Item> */}
+                        </Form.Item>
 
 
 

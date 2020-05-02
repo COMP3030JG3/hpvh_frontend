@@ -227,33 +227,20 @@ export default (props) => {
 
 
 
-                    <Form.Item label="Captcha:" extra="We must make sure that your are a human.">
-                        <Row gutter={50}>
-                            <Col span={15}>
-                                <Form.Item
-                                    name="captcha"
-                                    noStyle
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input the captcha you got!',
-                                        },
-                                    ]}
-                                >
-                                    <Input />
-                                </Form.Item>
-                            </Col>
-                            <Col span={30}>
-                                <Button>Get captcha</Button>
-                            </Col>
-                        </Row>
+
+                    <Form.Item
+                        name="code"
+                        rules={[
+                            {
+                                required: true,
+                                message: languages["login.code"],
+                            },
+                        ]}
+                    >
+                        <Input style={{ width: "50%" }} /> <span style={{ float: "right" }}><img src="" alt="code" /></span>
                     </Form.Item>
 
-                    <Form.Item name="agreement" valuePropName="checked" {...tailFormItemLayout}>
-                        <Checkbox>
-                            I have read the <a href="">agreement</a>
-                        </Checkbox>
-                    </Form.Item>
+
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit" className="signup-form-button">
                             Register

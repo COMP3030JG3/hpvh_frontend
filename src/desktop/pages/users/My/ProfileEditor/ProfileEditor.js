@@ -6,8 +6,10 @@ import {
     Button,
     Row,
     Col,
-    Modal
+    Modal,
+    Upload
 } from "antd"
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 
 
 
@@ -33,6 +35,15 @@ export default (props) => {
         props.onFinish();
     };
 
+    const [imageUrl, loading] = ["", false]
+    const uploadButton = (
+        <div>
+            {loading ? <LoadingOutlined /> : <PlusOutlined />}
+            <div className="ant-upload-text">Upload</div>
+        </div>
+    );
+
+
 
     return (
         <div>
@@ -40,6 +51,20 @@ export default (props) => {
                 <Col span={14} offset={5}>
 
                     <Form labelAlign="left" {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+                        <Form.Item >
+                            <Upload
+
+                                name="avatar"
+                                listType="picture-card"
+                                className="avatar-uploader"
+                                showUploadList={false}
+                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                beforeUpload={null}
+                                onChange={null}
+                            >
+                                {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                            </Upload>
+                        </Form.Item>
                         <Form.Item name={'name'} label={languages["my.profileEditor.label.fullName"]} >
                             <Input />
                         </Form.Item>

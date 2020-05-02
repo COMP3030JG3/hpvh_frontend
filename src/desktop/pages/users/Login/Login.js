@@ -51,6 +51,18 @@ export default (props) => {
                         />
                     </Form.Item>
 
+                    <Form.Item
+                        name="code"
+                        rules={[
+                            {
+                                required: true,
+                                message: languages["login.code"],
+                            },
+                        ]}
+                    >
+                        <Input style={{ width: "50%" }} /> <span style={{ float: "right" }}><img src="" alt="code" /></span>
+                    </Form.Item>
+
 
                     <Form.Item>
                         <Button type="primary" htmlType="submit" className="login-form-button">
