@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Avatar, Row, Col, Button } from 'antd';
+import { Card, Avatar, Row, Col, } from 'antd';
 import QueueAnim from 'rc-queue-anim'
 import { ArrowLeftOutlined } from '@ant-design/icons';
 export default (props) => {
@@ -120,6 +120,7 @@ export default (props) => {
 
             </Col>
         </Row>
-
     );
 };
+
+

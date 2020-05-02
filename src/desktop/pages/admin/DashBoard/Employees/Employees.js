@@ -5,13 +5,14 @@ import {
     Table,
     Modal,
     Button,
-    Drawer,
-    Descriptions,
     Form,
     Radio,
     Input,
-    DatePicker
+    Space,
 } from "antd"
+import Highlighter from 'react-highlight-words';
+import { SearchOutlined } from '@ant-design/icons';
+import Search from '../../../../components/Search'
 const { Column, ColumnGroup } = Table;
 
 const messages = {
@@ -33,11 +34,13 @@ const messages = {
 
 
 
+
 export default (props) => {
 
     const [showEditModal, setShowEditModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
-
+    const [searchText, setSearchText] = useState('');
+    const [searchedColumn, setSearchColumn] = useState('');
     const data = {
         index: 1,
         total: 1,
@@ -60,6 +63,8 @@ export default (props) => {
         console.log('Finish:', values);
     };
 
+    const search = new Search();
+
     return (
         <div>
 
@@ -69,7 +74,7 @@ export default (props) => {
                         onChange={props.onPageChange}
                         pagination={{ defaultCurrent: data.index, total: data.total, simple: true, pageSize: data.count }}
                     >
-                        <Column title={languages["dashBoard.employees.colTitle.id"]} dataIndex="id" key="id" fixed='left' width={100} />
+                        <Column title={languages["dashBoard.employees.colTitle.id"]} dataIndex="id" key="id" fixed='left' width={100} {...search.getColumnSearchProps('No.')} />
                         <Column title={languages["dashBoard.employees.colTitle.name"]} dataIndex="name" key="name" width={200} />
                         <Column title={languages["dashBoard.employees.colTitle.level"]} dataIndex="level" key="level" width={200} />
                         <Column title=""
@@ -246,3 +251,4 @@ const HandleAddModal = (props) => {
     );
 
 }
+

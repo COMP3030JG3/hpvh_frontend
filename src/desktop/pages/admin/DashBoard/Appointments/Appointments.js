@@ -12,6 +12,7 @@ import {
     Input,
     DatePicker
 } from "antd"
+import Search from '../../../../components/Search';
 const { Column, ColumnGroup } = Table;
 
 const messages = {
@@ -51,7 +52,7 @@ const messages = {
 
 
 export default (props) => {
-
+    const search = new Search();
     const [showDrawer, setShowDrawer] = useState(false);
 
     const [showModal, setShowModal] = useState(false);
@@ -88,15 +89,15 @@ export default (props) => {
                         scroll={{ x: 1600 }}
                         pagination={{ defaultCurrent: data.index, total: data.total, simple: true, pageSize: data.count }}
                     >
-                        <Column title={languages["dashBoard.appointments.colTitle.id"]} dataIndex="id" key="id" fixed='left' width={100} />
+                        <Column title={languages["dashBoard.appointments.colTitle.id"]} dataIndex="id" key="id" fixed='left' width={100} {...search.getColumnSearchProps('No. ')} />
                         <Column title={languages["dashBoard.appointments.colTitle.userName"]} dataIndex="userName" key="userName" width={100} />
                         <Column title={languages["dashBoard.appointments.colTitle.userId"]} dataIndex="userId" key="userId" width={100} />
                         <Column title={languages["dashBoard.appointments.colTitle.petName"]} dataIndex="petName" key="petName" width={100} />
-                        <Column title={languages["dashBoard.appointments.colTitle.status"]} dataIndex="status" key="status" width={100} />
-                        <Column title={languages["dashBoard.appointments.colTitle.type"]} dataIndex="type" key="type" width={100} />
+                        <Column title={languages["dashBoard.appointments.colTitle.status"]} dataIndex="status" key="status" width={100} filters={[]} />
+                        <Column title={languages["dashBoard.appointments.colTitle.type"]} dataIndex="type" key="type" width={100} filters={[]} />
                         <Column title={languages["dashBoard.appointments.colTitle.species"]} dataIndex="species" key="species" width={100} />
-                        <Column title={languages["dashBoard.appointments.colTitle.gender"]} dataIndex="gender" key="gender" width={100} />
-                        <Column title={languages["dashBoard.appointments.colTitle.meetingCity"]} dataIndex="meetingCity" key="meetingCity" />
+                        <Column title={languages["dashBoard.appointments.colTitle.gender"]} dataIndex="gender" key="gender" width={100} filters={[]} />
+                        <Column title={languages["dashBoard.appointments.colTitle.meetingCity"]} dataIndex="meetingCity" key="meetingCity" filters={[]} />
                         <Column title={languages["dashBoard.appointments.colTitle.appointmentTime"]} dataIndex="appointmentTime" key="id" />
                         <Column title={languages["dashBoard.appointments.colTitle.createTime"]} dataIndex="createTime" key="createTime" />
                         <Column title={languages["dashBoard.appointments.colTitle.lastChangedTime"]} dataIndex="lastChangedTime" key="lastChangedTime" />
