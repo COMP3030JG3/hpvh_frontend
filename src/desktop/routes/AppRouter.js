@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import Home from '../pages/Home';
 import Signup from '../pages/users/Signup';
 import Login from '../pages/users/Login';
+
+import ELogin from '../pages/admin/Login';
 import My from '../pages/users/My';
 import history from './history';
 import { getCookie } from '../utils/cookies'
@@ -41,6 +43,7 @@ class AppRouter extends React.Component {
             <Router history={history}>
                 <Switch>
                     <Route exact path="/login" component={Login} />
+                    <Route exact path="/elogin" component={ELogin} />
                     <Route exact path="/signup" component={Signup} />
                     <PrivateRoute exact path="/my" ><My /></PrivateRoute>
                     <Route exact path="/dashboard" component={DashBoard} />

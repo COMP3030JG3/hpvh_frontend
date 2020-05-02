@@ -3,6 +3,7 @@ import React from "react";
 import SideMenu from './SideMenu'
 import { Row, Col, Card } from 'antd';
 import Appointments from './Appointments';
+import Employees from './Employees';
 import Operations from './Operations';
 import QueueAnim from 'rc-queue-anim';
 
@@ -32,6 +33,8 @@ export default (props) => {
                 return <AnimeContent><Appointments key="appointments" /></AnimeContent>;
             case 'operations':
                 return <AnimeContent><Operations key="operations" /></AnimeContent>;
+            case 'employees':
+                return <AnimeContent><Employees key="employees" /></AnimeContent>;
             default:
                 return <AnimeContent>test</AnimeContent>;
         }

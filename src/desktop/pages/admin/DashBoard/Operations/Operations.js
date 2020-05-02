@@ -73,7 +73,7 @@ export default (props) => {
 
     return (
         <div>
-            <Row onClick={props.onClick}>
+            <Row>
                 <Col span={24} offset={0}>
                     <Table dataSource={data.items}
                         onChange={props.onPageChange}
