@@ -10,7 +10,9 @@ import {
     Form,
     Radio,
     Input,
-    DatePicker
+    Tag,
+    DatePicker,
+    Avatar,
 } from "antd"
 import Search from '../../../../components/Search';
 const { Column, ColumnGroup } = Table;
@@ -56,12 +58,17 @@ export default (props) => {
     const [showDrawer, setShowDrawer] = useState(false);
 
     const [showModal, setShowModal] = useState(false);
+    const [record, setRecord] = useState(0);
 
-    const data = {
-        index: 1,
-        total: 1,
-        count: 1,
-        items: [{ key: '1' }]
+    const { data, page } = props;
+
+    const datad = [];
+    if (data !== null) {
+        datad.push(...data);
+        console.log(datad[0])
+    } else {
+        datad.push({});
+
     }
 
     const languages = messages;
@@ -73,43 +80,53 @@ export default (props) => {
 
 
     const onMoreClick = (records) => {
+        setRecord(records);
+
         setShowDrawer(true);
     }
 
     const onFinish = values => {
-        console.log('Finish:', values);
+        props.onComplete(values)
     };
 
     return (
         <div>
             <Row>
                 <Col span={24} offset={0}>
-                    <Table dataSource={data.items}
+                    <Table dataSource={data}
                         onChange={props.onPageChange}
                         scroll={{ x: 1600 }}
-                        pagination={{ defaultCurrent: data.index, total: data.total, simple: true, pageSize: data.count }}
+                        pagination={{ position: ['bottomcenter'], defaultCurrent: 1, total: page.total, simple: true, pageSize: 15 }}
                     >
-                        <Column title={languages["dashBoard.appointments.colTitle.id"]} dataIndex="id" key="id" fixed='left' width={100} {...search.getColumnSearchProps('No. ')} />
-                        <Column title={languages["dashBoard.appointments.colTitle.userName"]} dataIndex="userName" key="userName" width={100} />
-                        <Column title={languages["dashBoard.appointments.colTitle.userId"]} dataIndex="userId" key="userId" width={100} />
-                        <Column title={languages["dashBoard.appointments.colTitle.petName"]} dataIndex="petName" key="petName" width={100} />
-                        <Column title={languages["dashBoard.appointments.colTitle.status"]} dataIndex="status" key="status" width={100} filters={[]} />
-                        <Column title={languages["dashBoard.appointments.colTitle.type"]} dataIndex="type" key="type" width={100} filters={[]} />
+                        <Column title={languages["dashBoard.appointments.colTitle.id"]} dataIndex="app_primary_key" key="app_primary_key" fixed='left' width={100} />
+                        <Column title={languages["dashBoard.appointments.colTitle.userId"]} dataIndex="customer_id" key="customer_id" fixed='left' width={100} />
+                        <Column title={languages["dashBoard.appointments.colTitle.petName"]} dataIndex="pet_name" key="pet_name" width={100} />
+                        <Column title={languages["dashBoard.appointments.colTitle.status"]} dataIndex="appointment_status" key="appointment_status" width={100}
+                            render={status => (
+                                <Tag color={status === 'processing' ? 'blue' : 'green'} key={status}>
+                                    {status}
+                                </Tag>
+                            )} />
+                        <Column title={languages["dashBoard.appointments.colTitle.type"]} dataIndex="appointment_type" key="appointment_type" width={100} />
                         <Column title={languages["dashBoard.appointments.colTitle.species"]} dataIndex="species" key="species" width={100} />
-                        <Column title={languages["dashBoard.appointments.colTitle.gender"]} dataIndex="gender" key="gender" width={100} filters={[]} />
-                        <Column title={languages["dashBoard.appointments.colTitle.meetingCity"]} dataIndex="meetingCity" key="meetingCity" filters={[]} />
-                        <Column title={languages["dashBoard.appointments.colTitle.appointmentTime"]} dataIndex="appointmentTime" key="id" />
-                        <Column title={languages["dashBoard.appointments.colTitle.createTime"]} dataIndex="createTime" key="createTime" />
-                        <Column title={languages["dashBoard.appointments.colTitle.lastChangedTime"]} dataIndex="lastChangedTime" key="lastChangedTime" />
-                        <Column title={languages["dashBoard.appointments.colTitle.needOperation"]} dataIndex="needOperation" key="needOperation" />
-                        <Column title={languages["dashBoard.appointments.colTitle.operationId"]} dataIndex="operationId" key="operationId" />
+                        <Column title={languages["dashBoard.appointments.colTitle.gender"]} dataIndex="pet_gender" key="pet_gender" width={100} />
+                        <Column title={languages["dashBoard.appointments.colTitle.meetingCity"]} dataIndex="address" key="address" />
+                        <Column title={languages["dashBoard.appointments.colTitle.appointmentTime"]} dataIndex="appointment_date" key="appointment_date" />
+                        <Column title={languages["dashBoard.appointments.colTitle.createTime"]} dataIndex="date" key="date" />
+                        <Column title={languages["dashBoard.appointments.colTitle.needOperation"]} dataIndex="needOperation" key="needOperation"
+                            render={status => (
+                                <Tag color={status === 'yes' ? 'green' : 'red'} key={status}>
+                                    {status}
+                                </Tag>
+                            )} />
                         <Column title=""
-                            render={record => (
+                            render={(a, b, record) => (
 
                                 <Button type="link" onClick={(e) => (onMoreClick(record))}>{languages["dashBoard.appointments.row.more"]}</Button>
 
                             )}
                             fixed='right'
+                            width={100}
 
                         />
                     </Table>
@@ -121,6 +138,8 @@ export default (props) => {
                 languages={languages}
                 showDrawer={showDrawer}
                 setShowDrawer={setShowDrawer}
+                datad={datad}
+                record={record}
             />
 
             <HandleModal
@@ -128,6 +147,7 @@ export default (props) => {
                 languages={languages}
                 showModal={showModal}
                 setShowModal={setShowModal}
+
             />
 
         </div>
@@ -159,7 +179,7 @@ const HandleModal = (props) => {
     const [showOperationForm, setshowOperationForm] = useState(false);
 
     const onNeedOperationChange = (e) => {
-        setshowOperationForm(e.target.value === 'yes');
+        setshowOperationForm(e.target.value);
     }
 
 
@@ -191,7 +211,7 @@ const HandleModal = (props) => {
                     {...layout}
                     name="completeAppointment"
 
-                    initialValues={{ type: "normal", diagnosis: "", needOperation: "no" }} onFinish={props.onFinish}
+                    initialValues={{ type: "normal", diagnosis: "", needOperation: false }} onFinish={props.onFinish}
                 >
                     <Form.Item name="type"
                         label={languages["dashBoard.appointments.modal.type"]}>
@@ -207,8 +227,8 @@ const HandleModal = (props) => {
                     <Form.Item name="needOperation"
                         label={languages["dashBoard.appointments.modal.needOperation"]}>
                         <Radio.Group onChange={onNeedOperationChange} buttonStyle="solid">
-                            <Radio.Button value="no">{languages["dashBoard.appointments.modal.no"]}</Radio.Button>
-                            <Radio.Button value="yes">{languages["dashBoard.appointments.modal.yes"]}</Radio.Button>
+                            <Radio.Button value={false}>{languages["dashBoard.appointments.modal.no"]}</Radio.Button>
+                            <Radio.Button value={true}>{languages["dashBoard.appointments.modal.yes"]}</Radio.Button>
                         </Radio.Group>
                     </Form.Item>
 
@@ -228,7 +248,7 @@ const HandleModal = (props) => {
 const DetailDrawer = (props) => {
 
     const { languages } = props;
-
+    const { datad, record } = props
     const onDrawerClose = () => {
         props.setShowDrawer(false);
     }
@@ -244,24 +264,31 @@ const DetailDrawer = (props) => {
             visible={props.showDrawer}
         >
 
-            <Descriptions bordered={true} layout="horizontal" column={2}>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.id"]} span={2}>1243214122412</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.userId"]} span={2}>Female</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.userName"]} span={2}>Joe</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.contactNumber"]} span={2}>details</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.type"]}>In surgery</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.status"]} >12 days</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.petName"]}>XXXX-XX-XX</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.species"]} span={2}>petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.gender"]} >XXXX-XX-XX</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.meetingCity"]} span={2}>petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.needOperation"]} >petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.operationId"]} >petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.appointmentTime"]} span={2}>petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.createTime"]} span={2}>petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.lastChangedTime"]} span={2}>petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.description"]} span={2}>petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.diagnosis"]} span={2}>petPlan</Descriptions.Item>
+
+            <Descriptions bordered={true} layout="horizontal" column={1}>
+                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.id"]} span={2}>{datad[record].app_primary_key || ""}</Descriptions.Item>
+                <Descriptions.Item label={""} span={2}><Avatar size={64} src={datad[record].pet_image_path} /></Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.type"]}>{datad[record].appointment_type || ""}</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.status"]} >
+                    <Tag color={datad[record].appointment_status === 'processing' ? 'blue' : 'green'}>
+                        {datad[record].appointment_status || ""}
+                    </Tag>
+                </Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.userId"]} span={2}>{datad[record].customer_id}</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.petName"]}>{datad[record].pet_name || ""}</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.species"]} span={2}>{datad[record].species || ""}</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.gender"]} >{datad[record].pet_gender || ""}</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.meetingCity"]} span={2}>{datad[record].address || ""}</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.needOperation"]} >
+
+                    <Tag color={datad[record].needOperation === 'yes' ? 'green' : 'red'}>
+                        {datad[record].needOperation || ""}
+                    </Tag>
+                </Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.appointmentTime"]} span={2}>{datad[record].appointment_date || ""}</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.createTime"]} span={2}>{datad[record].date || ""}</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.description"]} span={2}>{datad[record].description || ""}</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.appointments.colTitle.diagnosis"]} span={2}>{datad[record].diagnosis || ""}</Descriptions.Item>
             </Descriptions>
             <Button></Button>
         </Drawer>

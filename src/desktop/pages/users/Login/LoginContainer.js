@@ -50,7 +50,6 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
     langChange: dispatch.language.langChange,
     login: dispatch.validation.login,
-    logout: dispatch.validation.logout,
 });
 
 export default injectIntl(connect(mapState, mapDispatch)(LoginContainer));

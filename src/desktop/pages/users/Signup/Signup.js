@@ -40,10 +40,16 @@ export default (props) => {
     const languages = props.messages;
 
     const [form] = Form.useForm();
-
+    const [codeImg, setCodeImg] = useState('http://localhost:5000/api/customer/code');
     const onFinish = values => {
-        console.log('Received values of form: ', values);
+        props.onFormFinish(values);
     };
+
+
+    const onCodeImgClick = () => {
+        setCodeImg('http://localhost:5000/api/customer/code?' + Math.random());
+    }
+
 
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
@@ -53,7 +59,7 @@ export default (props) => {
                 }}
             >
                 <Option value="86">+86</Option>
-                <Option value="87">+87</Option>
+
             </Select>
         </Form.Item>
     );
@@ -124,7 +130,7 @@ export default (props) => {
 
 
                     <Form.Item
-                        name="password"
+                        name="password_hash"
                         label="Password:"
                         rules={[
                             {
@@ -150,7 +156,7 @@ export default (props) => {
                             },
                             ({ getFieldValue }) => ({
                                 validator(rule, value) {
-                                    if (!value || getFieldValue('password') === value) {
+                                    if (!value || getFieldValue('password_hash') === value) {
                                         return Promise.resolve();
                                     }
 
@@ -208,7 +214,7 @@ export default (props) => {
       </Form.Item> */}
 
                     <Form.Item
-                        name="phone"
+                        name="phone_number"
                         label="Phone Number:"
                         rules={[
                             {
@@ -227,17 +233,21 @@ export default (props) => {
 
 
 
-
+                    <span style={{ float: "right" }}>
+                        <img onClick={onCodeImgClick} src={codeImg} alt="code" />
+                    </span>
                     <Form.Item
-                        name="code"
+                        name="captcha"
+
                         rules={[
                             {
                                 required: true,
-                                message: languages["login.code"],
+                                message: "Code",
                             },
                         ]}
                     >
-                        <Input style={{ width: "50%" }} /> <span style={{ float: "right" }}><img src="" alt="code" /></span>
+                        <Input style={{ width: "50%" }} />
+
                     </Form.Item>
 
 

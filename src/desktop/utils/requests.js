@@ -7,5 +7,9 @@ export const request = axios.create({
 
 export const authRequest = axios.create({
     baseURL: '/api',
-    headers: { "Authorization": `Bearer ${getCookie("token")}` }
+    headers: { "Authorization": `Bearer ${getCookie("user_token")}` }
+});
+export const authRequestE = axios.create({
+    baseURL: '/api',
+    headers: { "Authorization": `Bearer ${getCookie("admin_token")}` }
 });

@@ -1,4 +1,4 @@
-export const language = {
+export default {
     state: 'en',
     reducers: {
         langChange(state, lang) {

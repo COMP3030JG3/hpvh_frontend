@@ -1,5 +1,7 @@
-import { language } from "./language"
-import { my } from "./my"
-import { validation } from "./validation"
-import { dashBoard } from "./dashBoard"
-export { language, my, validation, dashBoard }
+import language from "./language"
+import my from "./my"
+import validation from "./validation"
+import dashBoard from "./dashBoard"
+import usersApi from "./usersApi"
+import employeesApi from "./employeesApi"
+export { language, my, validation, dashBoard, usersApi, employeesApi }

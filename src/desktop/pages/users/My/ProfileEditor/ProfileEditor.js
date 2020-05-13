@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Form,
     Input,
     InputNumber,
     Button,
+    message,
     Row,
     Col,
     Modal,
@@ -15,8 +16,50 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 
 export default (props) => {
 
+    const [imageUrl, setImageUrl] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [form] = Form.useForm();
+    form.setFieldsValue({
+        fullname: props.profile.fullname,
+        email: props.profile.email,
+        phone_number: props.profile.phone_number,
+        address: props.profile.address,
+
+    });
     const languages = props.messages;
 
+
+    function getBase64(img, callback) {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(img);
+    }
+
+    function beforeUpload(file) {
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+            message.error('You can only upload JPG/PNG file!');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 0.2;
+        if (!isLt2M) {
+            message.error('Image must smaller than 0.2MB!');
+        }
+        return isJpgOrPng && isLt2M;
+    }
+    const handleChange = info => {
+        if (info.file.status === 'uploading') {
+            setIsLoading(true);
+            return;
+        }
+        if (info.file.status === 'done') {
+            // Get this url from response in real world.
+            getBase64(info.file.originFileObj, imageUrl => {
+                setImageUrl(imageUrl);
+                setIsLoading(false);
+            }
+            );
+        }
+    };
     const layout = {
         labelCol: { span: 5, },
         wrapperCol: { span: 19 },
@@ -31,14 +74,20 @@ export default (props) => {
 
 
     const onFinish = values => {
-        console.log(values);
-        props.onFinish();
+        let v = {
+            fullname: values.fullname,
+            email: values.email,
+            address: values.address,
+            phone_number: values.phone_number,
+            customer_image_path: imageUrl.split(',')[1]
+        }
+        props.changeInfo(v);
     };
 
-    const [imageUrl, loading] = ["", false]
+
     const uploadButton = (
         <div>
-            {loading ? <LoadingOutlined /> : <PlusOutlined />}
+            {isLoading ? <LoadingOutlined /> : <PlusOutlined />}
             <div className="ant-upload-text">Upload</div>
         </div>
     );
@@ -50,28 +99,27 @@ export default (props) => {
             <Row>
                 <Col span={14} offset={5}>
 
-                    <Form labelAlign="left" {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+                    <Form form={form} labelAlign="left" {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
                         <Form.Item >
                             <Upload
-
                                 name="avatar"
                                 listType="picture-card"
                                 className="avatar-uploader"
                                 showUploadList={false}
                                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                beforeUpload={null}
-                                onChange={null}
+                                beforeUpload={beforeUpload}
+                                onChange={handleChange}
                             >
                                 {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                             </Upload>
                         </Form.Item>
-                        <Form.Item name={'name'} label={languages["my.profileEditor.label.fullName"]} >
+                        <Form.Item name={'fullname'} label={languages["my.profileEditor.label.fullName"]} >
                             <Input />
                         </Form.Item>
                         <Form.Item name={'email'} label={languages["my.profileEditor.label.email"]} rules={[{ type: 'email' }]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item name={'number'} label={languages["my.profileEditor.label.phoneNumber"]} >
+                        <Form.Item name={'phone_number'} label={languages["my.profileEditor.label.phoneNumber"]} >
                             <Input />
                         </Form.Item>
                         <Form.Item name={'address'} label={languages["my.profileEditor.label.address"]}>
@@ -118,7 +166,9 @@ class Change extends React.Component {
     };
 
     onFinish = e => {
-        this.props.changePassword(e);
+        let { confirm_password, ...v } = e
+        this.props.changePassword(v);
+
     }
 
 
@@ -145,17 +195,17 @@ class Change extends React.Component {
                     footer={null}
                 >
                     <Form {...this.layout} onFinish={this.onFinish} validateMessages={validateMessages}>
-                        <Form.Item name={'oldPassword'} label={languages["my.profileEditor.label.oldPassword"]} rules={[{ required: true }]}>
+                        <Form.Item name={'old_password'} label={languages["my.profileEditor.label.oldPassword"]} rules={[{ required: true }]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item name="password" label={languages["my.profileEditor.label.password"]} rules={[{ required: true, message: 'Please input your password!', },]} hasFeedback>
+                        <Form.Item name="new_password" label={languages["my.profileEditor.label.password"]} rules={[{ required: true, message: 'Please input your password!', },]} hasFeedback>
                             <Input.Password />
                         </Form.Item>
 
-                        <Form.Item name="confirm" label={languages["my.profileEditor.label.confirm"]} dependencies={['password']} hasFeedback rules={[{ required: true, message: 'Please confirm your password!', },
+                        <Form.Item name="confirm_password" label={languages["my.profileEditor.label.confirm"]} dependencies={['password']} hasFeedback rules={[{ required: true, message: 'Please confirm your password!', },
                         ({ getFieldValue }) => ({
                             validator(rule, value) {
-                                if (!value || getFieldValue('password') === value) {
+                                if (!value || getFieldValue('new_password') === value) {
                                     return Promise.resolve();
                                 }
                                 return Promise.reject('The two passwords that you entered do not match!');

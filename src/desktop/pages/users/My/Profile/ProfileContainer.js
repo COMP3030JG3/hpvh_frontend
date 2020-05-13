@@ -22,10 +22,11 @@ const ProfileContainer = (props) => {
 
 
     const data = {
-        avatar: "/avatar",
-        name: "name",
-        description: "description"
+        avatar: props.loginInfo.customer_image_path,
+        name: props.loginInfo.fullname,
+        description: props.loginInfo.email
     }
+
 
     return (
         <Profile
@@ -41,6 +42,7 @@ const ProfileContainer = (props) => {
 const mapState = state => ({
     myContent: state.my.myContent,
     lang: state.language,
+    loginInfo: state.validation.loginInfo
 });
 
 const mapDispatch = dispatch => ({

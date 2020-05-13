@@ -17,7 +17,7 @@ const LoginContainer = (props) => {
     }
 
     const onFormFinish = values => {
-        props.login(values);
+        props.elogin(values);
         //console.log('Received values of form: ', values);
     };
 
@@ -49,8 +49,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
     langChange: dispatch.language.langChange,
-    login: dispatch.validation.login,
-    logout: dispatch.validation.logout,
+    elogin: dispatch.validation.elogin,
 });
 
 export default injectIntl(connect(mapState, mapDispatch)(LoginContainer));

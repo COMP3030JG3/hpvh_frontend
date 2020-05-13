@@ -2,63 +2,59 @@ import React from "react";
 import Appointments from "./Appointments"
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
+import fomatDate from '../../../../utils/formatDate'
 
-const AppointmentsContainer = (props) => {
 
-    const data = [
-        {
-            id: 1,
-            index: 0,
-            customerName: 'John',
-            petName: 'Kitty',
-            gender: 'Male',
-            species: 'Cat',
-            meetingCity: 'Beijing',
-            description: 'Good pet',
-            image: '',
-            surgeryTime: '2020.4.8',
-            appointmentDate: '2020.1.31'
-        },
-        {
-            id: 2,
-            index: 1,
-            customerName: 'Zhang San',
-            petName: 'Wang Cai',
-            gender: 'Male',
-            species: 'Dog',
-            meetingCity: 'Shanghai',
-            description: 'Pretty pet',
-            image: '',
-            surgeryTime: '2020.5.6',
-            appointmentDate: '2020.4.29'
-        },
-        {
-            id: 3,
-            index: 2,
-            customerName: 'John',
-            petName: 'Kitty',
-            gender: 'Male',
-            species: 'Cat',
-            meetingCity: 'Beijing',
-            description: 'Good pet',
-            image: '',
-            surgeryTime: '2020.4.8',
-            appointmentDate: '2020.1.31'
-        },
 
-    ];
+class AppointmentsContainer extends React.Component {
 
-    return (
-        <Appointments messages={props.intl.messages} data={data} />
-    );
-};
+
+
+    componentDidMount() {
+        if (this.props.firstLoad.appointments) {
+            this.props.getAppointments({ index: 1 });
+        }
+    }
+
+
+    render() {
+
+        let d
+        let data = null;
+        let page = {};
+        if (!this.props.firstLoad.appointments) {
+            d = this.props.appointments.item;
+            data = d.map(e => {
+                return {
+                    ...e,
+                    key: e.app_primary_key,
+                    appointment_date: fomatDate(new Date(e.appointment_date * 1000), 'yyyy-MM-dd'),
+                    date: fomatDate(new Date(Math.round(e.date) * 1000), 'yyyy-MM-dd'),
+                    needOperation: e.needOperation ? 'yes' : (e.appointment_status === 'processing' ? ' ' : 'no')
+                }
+            })
+            let { item, ...p } = this.props.appointments
+            page = p
+        }
+        const onPageChange = (e) => {
+            this.props.getAppointments({ index: e.current });
+        }
+
+
+        return (
+            <Appointments messages={this.props.intl.messages} data={data} page={page} onPageChange={onPageChange} />
+        );
+    }
+}
 
 const mapState = state => ({
-
+    appointments: state.usersApi.appointments,
+    firstLoad: state.usersApi.firstLoad
 });
 
 const mapDispatch = dispatch => ({
-
+    firstLoadReducer: dispatch.usersApi.firstLoadReducer,
+    getAppointments: dispatch.usersApi.getAppointments,
 });
 
 export default injectIntl(connect(mapState, mapDispatch)(AppointmentsContainer));

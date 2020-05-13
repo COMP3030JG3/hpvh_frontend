@@ -1,5 +1,5 @@
 //import { request } from '../utils/request'
-export const dashBoard = {
+export default {
     state: {
         dashBoardContent: "appointments",
         firstLoading: true

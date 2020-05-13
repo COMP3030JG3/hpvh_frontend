@@ -1,5 +1,5 @@
 //import { request } from '../utils/request'
-export const my = {
+export default {
     state: {
         myContent: "appointments",
         tracksData: {},
