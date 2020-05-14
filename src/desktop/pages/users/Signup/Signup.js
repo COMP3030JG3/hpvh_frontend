@@ -40,14 +40,14 @@ export default (props) => {
     const languages = props.messages;
 
     const [form] = Form.useForm();
-    const [codeImg, setCodeImg] = useState('http://localhost:5000/api/customer/code');
+    const [codeImg, setCodeImg] = useState('/api/customer/code');
     const onFinish = values => {
         props.onFormFinish(values);
     };
 
 
     const onCodeImgClick = () => {
-        setCodeImg('http://localhost:5000/api/customer/code?' + Math.random());
+        setCodeImg('/api/customer/code?' + Math.random());
     }
 
 

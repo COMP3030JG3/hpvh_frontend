@@ -119,9 +119,12 @@ export default (props) => {
         </div>
     );
 
-    const historyPet = props.historyPet.map(item =>
-        <Option value={item.id}>{item.pet_name}</Option>
-    )
+    let historyPet;
+    if (props.historyPet !== null) {
+        historyPet = props.historyPet.map(item =>
+            <Option value={item.id}>{item.pet_name}</Option>
+        )
+    }
 
     const selectHistoryPet = (v) => {
         let index = props.historyPet.findIndex(item => item.id === v);

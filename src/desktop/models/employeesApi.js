@@ -80,7 +80,7 @@ export default {
                     pet_name: data.pet_name,
                     appointment_id: id
                 }
-                authRequest.post('/employee/operation/create', d).then(res => {
+                authRequestE.post('/employee/operation/create', d).then(res => {
                     let dd = {
                         appointment_status: 'completed',
                         needOperation: data.needOperation,

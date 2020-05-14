@@ -9,9 +9,11 @@ export default {
         loginInfo: {},
         appointments: {},
         operations: {},
+        pets: {},
         firstLoad: {
             appointments: true,
             operations: true,
+            pets: true
         }
     },
     reducers: {
@@ -20,6 +22,9 @@ export default {
         },
         getOperationReducer(state, key) {
             return { ...state, operations: key };
+        },
+        getPetReducer(state, key) {
+            return { ...state, pets: key };
         },
         firstLoadReducer(state, key) {
             return { ...state, firstLoad: { ...state.firstLoad, ...key } };
@@ -70,6 +75,25 @@ export default {
 
 
                 this.firstLoadReducer({ operations: false })
+            }).catch(() => {
+
+                message.error('you are not login')
+            })
+        },
+        async getPets({ index, ...data }, rootState) {
+            this.firstLoadReducer({ pets: true })
+            authRequest.get('/customer/pet/' + index, {
+                params: {
+                    ...data
+                }
+            }).then(res => {
+                if (res.data.code === 200) {
+                    this.getPetReducer(res.data.data);
+                } else {
+                    this.getPetReducer({});
+                }
+
+                this.firstLoadReducer({ pets: false })
             }).catch(() => {
 
                 message.error('you are not login')
