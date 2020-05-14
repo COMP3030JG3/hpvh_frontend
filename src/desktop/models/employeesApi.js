@@ -147,7 +147,6 @@ export default {
                     this.getEmployeeReducer({});
                 }
 
-
                 this.firstLoadReducer({ employees: false })
             }).catch(() => {
 

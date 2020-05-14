@@ -65,7 +65,7 @@ export default {
             })
         },
         async elogout(payload, rootState) {
-            await authRequest.get('/customer/logout').then(resu => {
+            await authRequestE.get('/customer/logout').then(resu => {
                 //console.log('res=>', resu.data);
                 this.eloginReducer({});
                 sessionStorage.setItem(
