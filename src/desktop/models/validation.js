@@ -6,6 +6,7 @@ import Operation from 'antd/lib/transfer/operation'
 export default {
     state: {
         loginInfo: {},
+        eloginInfo: {}
     },
     reducers: {
         loginReducer(state, loginInfo) {
@@ -54,6 +55,26 @@ export default {
             await authRequest.get('/customer/logout').then(resu => {
                 //console.log('res=>', resu.data);
                 this.loginReducer({});
+                sessionStorage.setItem(
+                    "UserInfo",
+                    ""
+                );
+                setCookie('user_token', "");
+                history.push('/login');
+                history.go();
+            })
+        },
+        async elogout(payload, rootState) {
+            await authRequest.get('/customer/logout').then(resu => {
+                //console.log('res=>', resu.data);
+                this.eloginReducer({});
+                sessionStorage.setItem(
+                    "AdminInfo",
+                    ""
+                );
+                setCookie('admin_token', "");
+                history.push('/elogin');
+                history.go();
             })
         },
         async getUserInfo(payload, rootState) {
@@ -100,24 +121,7 @@ export default {
             })
         },
 
-        async apost(data, rootState) {
-            let d = {
-                surgery_cost: 13,
 
-
-            }
-
-            authRequestE.post('/employee/operation/modify/1', d).then(res => {
-                console.log(res.data)
-                message.success(res.data.code);
-            })
-        },
-        async aget(payload, rootState) {
-            await authRequestE.get('/employee/1').then(resu => {
-                console.log(resu.data)
-                message.success(resu.data.code);
-            })
-        },
 
     }
 }

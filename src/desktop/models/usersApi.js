@@ -11,7 +11,7 @@ export default {
         operations: {},
         firstLoad: {
             appointments: true,
-            operation: true,
+            operations: true,
         }
     },
     reducers: {
@@ -49,20 +49,29 @@ export default {
                 } else {
                     this.getAppointmentReducer({});
                 }
-
-
                 this.firstLoadReducer({ appointments: false })
             }).catch(() => {
 
                 message.error('you are not login')
             })
         },
-        async getOperations({ index, }, rootState) {
-            authRequest.get('/customer/operation/' + index
-            ).then(res => {
-                this.getOperationReducer(res.data.data);
+        async getOperations({ index, ...data }, rootState) {
+            this.firstLoadReducer({ operations: true })
+            authRequest.get('/customer/operation/' + index, {
+                params: {
+                    ...data
+                }
+            }).then(res => {
+                if (res.data.code === 200) {
+                    this.getOperationReducer(res.data.data);
+                } else {
+                    this.getOperationReducer({});
+                }
 
+
+                this.firstLoadReducer({ operations: false })
             }).catch(() => {
+
                 message.error('you are not login')
             })
         },

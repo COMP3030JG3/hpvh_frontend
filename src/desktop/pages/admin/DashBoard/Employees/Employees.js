@@ -41,17 +41,20 @@ export default (props) => {
     const [showAddModal, setShowAddModal] = useState(false);
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchColumn] = useState('');
-    const data = {
+    const [record, setRecord] = useState({});
+    const daata = {
         index: 1,
         total: 1,
         count: 1,
-        items: [{ key: '1' }]
+        items: [{ key: '1', id: 1, username: 'aa', password_hash: 'aa', level: 'administrator' }]
     }
 
+    const { data, page } = props
     const languages = messages;
 
 
     const onEditClick = (records) => {
+        setRecord(records)
         setShowEditModal(true);
     }
     const onAddClick = (records) => {
@@ -59,8 +62,12 @@ export default (props) => {
     }
 
 
-    const onFinish = values => {
-        console.log('Finish:', values);
+    const onAddFinish = values => {
+        props.onAddFinish(values)
+    };
+    const onEditFinish = values => {
+        let v = { id: record.id, ...values }
+        props.onEditFinish(v)
     };
 
     const search = new Search();
@@ -70,16 +77,19 @@ export default (props) => {
 
             <Row onClick={props.onClick}>
                 <Col span={24} offset={0}>
-                    <Table dataSource={data.items}
+                    <Table dataSource={data}
                         onChange={props.onPageChange}
-                        pagination={{ defaultCurrent: data.index, total: data.total, simple: true, pageSize: data.count }}
+                        pagination={{ defaultCurrent: 1, total: page.total, simple: true, pageSize: 15 }}
                     >
                         <Column title={languages["dashBoard.employees.colTitle.id"]} dataIndex="id" key="id" fixed='left' width={100} {...search.getColumnSearchProps('No.')} />
-                        <Column title={languages["dashBoard.employees.colTitle.name"]} dataIndex="name" key="name" width={200} />
+                        <Column title={languages["dashBoard.employees.colTitle.name"]} dataIndex="username" key="username" width={200} />
                         <Column title={languages["dashBoard.employees.colTitle.level"]} dataIndex="level" key="level" width={200} />
                         <Column title=""
-                            render={record => (
-                                <Button type="link" onClick={(e) => (onEditClick(record))}>{languages["dashBoard.employees.row.edit"]}</Button>
+                            render={records => (
+                                <Button type="link" onClick={e => {
+                                    onEditClick(records)
+                                }
+                                }>{languages["dashBoard.employees.row.edit"]}</Button>
                             )}
                             fixed='right'
                         />
@@ -88,20 +98,25 @@ export default (props) => {
             </Row>
             <Row>
                 <Col span={24}>
-                    <Button style={{ display: "block", margin: "0 auto" }} type="primary" onClick={onAddClick} >Add</Button>
+                    <Button
+                        style={{ display: "block", margin: "0 auto" }}
+                        type="primary"
+                        onClick={onAddClick} >Add</Button>
                 </Col>
             </Row>
 
 
             <HandleEditModal
-                onFinish={onFinish}
+                record={record}
+                onFinish={onEditFinish}
                 languages={languages}
                 showModal={showEditModal}
                 setShowModal={setShowEditModal}
             />
 
             <HandleAddModal
-                onFinish={onFinish}
+
+                onFinish={onAddFinish}
                 languages={languages}
                 showModal={showAddModal}
                 setShowModal={setShowAddModal}
@@ -121,7 +136,7 @@ const HandleEditModal = (props) => {
     };
 
     const { languages, setShowModal } = props;
-
+    const [form] = Form.useForm()
     const onOk = () => {
         setShowModal(false);
 
@@ -132,7 +147,10 @@ const HandleEditModal = (props) => {
         setShowModal(false);
     };
 
-
+    form.setFieldsValue({
+        username: props.record.username,
+        level: props.record.level,
+    })
 
     return (
         <div>
@@ -147,17 +165,18 @@ const HandleEditModal = (props) => {
 
             >
                 <Form
+                    form={form}
                     {...layout}
                     name="edit"
                     initialValues={{}} onFinish={props.onFinish}
                 >
-                    <Form.Item name="name"
+                    <Form.Item name="username"
                         label={languages["dashBoard.employees.modal.name"]}
                     >
                         <Input />
                     </Form.Item>
 
-                    <Form.Item name="password"
+                    <Form.Item name="password_hash"
                         label={languages["dashBoard.employees.modal.password"]}
                     >
                         <Input />
@@ -193,7 +212,6 @@ const HandleAddModal = (props) => {
 
     const onOk = () => {
         setShowModal(false);
-
     };
 
 
@@ -220,13 +238,13 @@ const HandleAddModal = (props) => {
                     name="add"
                     initialValues={{}} onFinish={props.onFinish}
                 >
-                    <Form.Item name="name"
+                    <Form.Item name="username"
                         label={languages["dashBoard.employees.modal.name"]}
                     >
                         <Input />
                     </Form.Item>
 
-                    <Form.Item name="password"
+                    <Form.Item name="password_hash"
                         label={languages["dashBoard.employees.modal.password"]}
                     >
                         <Input />

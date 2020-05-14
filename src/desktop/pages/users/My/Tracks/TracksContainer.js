@@ -2,83 +2,59 @@ import React, { Component } from "react";
 import Tracks from "./Tracks"
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
+import fomatDate from '../../../../utils/formatDate'
 
-class TracksContainer extends Component {
+class TracksContainer extends React.Component {
 
-    componentWillMount() {
 
-        return this.props.firstLoading ? this.props.getTracks(1) : {};
+
+    componentDidMount() {
+        if (this.props.firstLoad.operations) {
+            this.props.getOperations({ index: 1 });
+        }
     }
+
 
     render() {
-        const data = {
-            index: 1,
-            total: 3,
-            count: 3,
-            items:
-                [
-                    {
-                        id: 1,
-                        index: 0,
-                        customerName: 'John',
-                        petName: 'Kitty',
-                        gender: 'Male',
-                        species: 'Cat',
-                        meetingCity: 'Beijing',
-                        description: 'Good pet',
-                        image: '',
-                        surgeryTime: '2020.4.8',
-                        appointmentDate: '2020.1.31'
-                    },
-                    {
-                        id: 2,
-                        index: 1,
-                        customerName: 'Zhang San',
-                        petName: 'Wang Cai',
-                        gender: 'Male',
-                        species: 'Dog',
-                        meetingCity: 'Shanghai',
-                        description: 'Pretty pet',
-                        image: '',
-                        surgeryTime: '2020.5.6',
-                        appointmentDate: '2020.4.29'
-                    },
-                    {
-                        id: 3,
-                        index: 2,
-                        customerName: 'John',
-                        petName: 'Kitty',
-                        gender: 'Male',
-                        species: 'Cat',
-                        meetingCity: 'Beijing',
-                        description: 'Good pet',
-                        image: '',
-                        surgeryTime: '2020.4.8',
-                        appointmentDate: '2020.1.31'
-                    },
 
-                ]
-        };
+        let d
+        let data = null;
+        let page = {};
+        if (!this.props.firstLoad.operations) {
+            d = this.props.operations.item;
+            if (d !== undefined) {
+                data = d.map(e => {
+                    return {
+                        ...e,
+                        release_time: fomatDate(new Date(Math.round(e.release_time) * 1000), 'yyyy-MM-dd'),
+                        surgery_begin_time: fomatDate(new Date(Math.round(e.surgery_begin_time) * 1000), 'yyyy-MM-dd'),
+                    }
+                })
+            }
+            let { item, ...p } = this.props.operations
+            page = p
+        }
         const onPageChange = (e) => {
-            this.props.getTracks(e.current);
+            this.props.getOperations({ index: e.current });
+        }
+        const onComplete = (v) => {
+            console.log(v)
         }
 
-
         return (
-            <Tracks data={data} onPageChange={onPageChange} />
+            <Tracks messages={this.props.intl.messages} data={data} page={page} onComplete={onComplete} onPageChange={onPageChange} />
         );
     }
-};
-
+}
 const mapState = state => ({
-    //lang: state.language,
-    tracksData: state.my.tracksData,
-    firstLoading: state.my.firstLoading,
+    operations: state.usersApi.operations,
+    firstLoad: state.usersApi.firstLoad
 });
 
 const mapDispatch = dispatch => ({
-    langChange: dispatch.language.langChange,
-    getTracks: dispatch.my.getTracks,
+    firstLoadReducer: dispatch.usersApi.firstLoadReducer,
+    getOperations: dispatch.usersApi.getOperations,
+    completeOperation: dispatch.usersApi.completeOperation,
 });
 
 export default injectIntl(connect(mapState, mapDispatch)(TracksContainer));

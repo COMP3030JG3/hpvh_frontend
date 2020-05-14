@@ -15,9 +15,9 @@ const SideMenuContainer = (props) => {
 
 
     const data = {
-        avatar: "/avatar",
-        name: "name",
-        description: "description"
+        avatar: "employee",
+        name: props.eloginInfo.username,
+        description: props.eloginInfo.level,
     }
 
     return (
@@ -26,6 +26,7 @@ const SideMenuContainer = (props) => {
             data={data}
             menuKey={props.dashBoardContent}
             onMenuClick={onMenuClick}
+            elogout={props.elogout}
             onLangChange={onLangChange} />
     );
 };
@@ -33,11 +34,13 @@ const SideMenuContainer = (props) => {
 const mapState = state => ({
     dashBoardContent: state.dashBoard.dashBoardContent,
     lang: state.language,
+    eloginInfo: state.validation.eloginInfo
 });
 
 const mapDispatch = dispatch => ({
     switchDashBoardContent: dispatch.dashBoard.switchDashBoardContent,
     langChange: dispatch.language.langChange,
+    elogout: dispatch.validation.elogout
 });
 
 

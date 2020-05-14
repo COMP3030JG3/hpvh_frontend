@@ -34,7 +34,7 @@ export default (props) => {
                             <EditOutlined onClick={props.onEditClick} key="edit" />
                         </Tooltip>,
                         <Tooltip placement="top" title={language["my.profile.iconTip.logOut"]}>
-                            <ExportOutlined key="logout" />
+                            <ExportOutlined key="logout" onClick={props.logout} />
                         </Tooltip>,
 
                     ]}

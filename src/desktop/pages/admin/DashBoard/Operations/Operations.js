@@ -10,7 +10,9 @@ import {
     Form,
     Radio,
     Input,
-    DatePicker
+    Tag,
+    DatePicker,
+    Avatar,
 } from "antd"
 const { Column } = Table;
 
@@ -47,12 +49,16 @@ export default (props) => {
     const [showDrawer, setShowDrawer] = useState(false);
 
     const [showModal, setShowModal] = useState(false);
+    const [record, setRecord] = useState(0);
+    const { data, page } = props;
 
-    const data = {
-        index: 1,
-        total: 1,
-        count: 1,
-        items: [{ key: '1' }]
+    const datad = [];
+    if (data !== null) {
+        datad.push(...data);
+        console.log(datad[0])
+    } else {
+        datad.push({});
+
     }
 
     const languages = messages;
@@ -64,6 +70,7 @@ export default (props) => {
 
 
     const onMoreClick = (records) => {
+        setRecord(records)
         setShowDrawer(true);
     }
 
@@ -75,26 +82,20 @@ export default (props) => {
         <div>
             <Row>
                 <Col span={24} offset={0}>
-                    <Table dataSource={data.items}
+                    <Table dataSource={data}
                         onChange={props.onPageChange}
-                        scroll={{ x: 1400 }}
-                        pagination={{ defaultCurrent: data.index, total: data.total, simple: true, pageSize: data.count }}
+
+                        pagination={{ defaultCurrent: 1, total: page.total, simple: true, pageSize: 15 }}
                     >
-                        <Column title={languages["dashBoard.operations.colTitle.id"]} dataIndex="id" key="id" fixed='left' width={100} />
-                        <Column title={languages["dashBoard.operations.colTitle.appointmentId"]} dataIndex="appointmentId" width={150} key="appointmentId" />
-                        <Column title={languages["dashBoard.operations.colTitle.userName"]} dataIndex="userName" key="userName" width={100} />
-                        <Column title={languages["dashBoard.operations.colTitle.userId"]} dataIndex="userId" key="userId" width={100} />
-                        <Column title={languages["dashBoard.operations.colTitle.petName"]} dataIndex="petName" key="petName" width={100} />
-                        <Column title={languages["dashBoard.operations.colTitle.status"]} dataIndex="status" key="status" width={100} />
-                        <Column title={languages["dashBoard.operations.colTitle.cost"]} dataIndex="cost" key="cost" width={100} />
-                        <Column title={languages["dashBoard.operations.colTitle.species"]} dataIndex="species" key="species" width={100} />
-                        <Column title={languages["dashBoard.operations.colTitle.gender"]} dataIndex="gender" key="gender" width={100} />
-                        <Column title={languages["dashBoard.operations.colTitle.createTime"]} dataIndex="createTime" key="createTime" />
-                        <Column title={languages["dashBoard.operations.colTitle.startTime"]} dataIndex="startTime" key="startTime" />
-                        <Column title={languages["dashBoard.operations.colTitle.endTime"]} dataIndex="endTime" key="endTime" />
+                        <Column title={languages["dashBoard.operations.colTitle.id"]} dataIndex="id" key="id" fixed='left' />
+                        <Column title={languages["dashBoard.operations.colTitle.appointmentId"]} dataIndex="appointment_id" key="appointment_id" />
+                        <Column title={languages["dashBoard.operations.colTitle.petName"]} dataIndex="pet_name" key="pet_name" />
+                        <Column title={languages["dashBoard.operations.colTitle.cost"]} dataIndex="surgery_cost" key="surgery_cost" />
+                        <Column title={languages["dashBoard.operations.colTitle.startTime"]} dataIndex="surgery_begin_time" key="surgery_begin_time" />
+                        <Column title={languages["dashBoard.operations.colTitle.endTime"]} dataIndex="release_time" key="release_time" />
 
                         <Column title=""
-                            render={record => (
+                            render={(a, b, record) => (
 
                                 <Button type="link" onClick={(e) => (onMoreClick(record))}>{languages["dashBoard.operations.row.more"]}</Button>
 
@@ -107,6 +108,8 @@ export default (props) => {
             </Row>
 
             <DetailDrawer
+                datad={datad}
+                record={record}
                 onHandleClick={onHandleClick}
                 languages={languages}
                 showDrawer={showDrawer}
@@ -143,11 +146,6 @@ const HandleModal = (props) => {
     const onCancel = () => {
         setShowModal(false);
     };
-
-
-
-
-
 
 
     return (
@@ -188,7 +186,7 @@ const HandleModal = (props) => {
 const DetailDrawer = (props) => {
 
     const { languages } = props;
-
+    const { datad, record } = props
     const onDrawerClose = () => {
         props.setShowDrawer(false);
     }
@@ -205,22 +203,13 @@ const DetailDrawer = (props) => {
         >
 
             <Descriptions bordered={true} layout="horizontal" column={2}>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.id"]} span={2}>1243214122412</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.appointmentId"]} span={2}>petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.userId"]} span={2}>Female</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.userName"]} span={2}>Joe</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.contactNumber"]} span={2}>details</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.status"]} >12 days</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.cost"]} >12 days</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.petName"]}>XXXX-XX-XX</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.species"]} span={2}>petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.gender"]} >XXXX-XX-XX</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.createTime"]} span={2}>petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.startTime"]} span={2}>petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.endTime"]} span={2}>petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.description"]} span={2}>petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.diagnosis"]} span={2}>petPlan</Descriptions.Item>
-                <Descriptions.Item label={languages["dashBoard.operations.colTitle.operationPlan"]} span={2}>petPlan</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.operations.colTitle.id"]} span={2}>{datad[record].id}</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.operations.colTitle.appointmentId"]} span={2}>{datad[record].appointment_id} </Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.operations.colTitle.cost"]} >{datad[record].surgery_cost}</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.operations.colTitle.petName"]}>{datad[record].pet_name}</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.operations.colTitle.startTime"]} span={2}>{datad[record].surgery_begin_time}</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.operations.colTitle.endTime"]} span={2}>{datad[record].release_time}</Descriptions.Item>
+                <Descriptions.Item label={languages["dashBoard.operations.colTitle.operationPlan"]} span={2}>{datad[record].operation_plan}</Descriptions.Item>
             </Descriptions>
             <Button></Button>
         </Drawer>

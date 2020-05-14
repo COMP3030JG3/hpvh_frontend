@@ -56,7 +56,7 @@ const messages = {
 export default (props) => {
     const search = new Search();
     const [showDrawer, setShowDrawer] = useState(false);
-
+    const [date, setDate] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [record, setRecord] = useState(0);
 
@@ -84,9 +84,26 @@ export default (props) => {
 
         setShowDrawer(true);
     }
+    const onDateClick = (value, sd) => {
+        let b = Number(new Date(value[0]._d.getFullYear(), value[0]._d.getMonth(), value[0]._d.getDate())) / 1000
+        let e = Number(new Date(value[1]._d.getFullYear(), value[1]._d.getMonth(), value[1]._d.getDate())) / 1000
+        setDate({ begin: b, end: e })
+
+    }
+
 
     const onFinish = values => {
-        props.onComplete(values)
+        let v = {
+            needOperation: values.needOperation,
+            operation_plan: values.operationPlan,
+            appointment_type: values.type,
+            diagnosis: values.diagnosis,
+            surgery_begin_time: date.begin,
+            release_time: date.end,
+            pet_name: datad[record].pet_name,
+            id: datad[record].app_primary_key
+        }
+        props.onComplete(v)
     };
 
     return (
@@ -143,6 +160,8 @@ export default (props) => {
             />
 
             <HandleModal
+
+                onDateClick={onDateClick}
                 onFinish={onFinish}
                 languages={languages}
                 showModal={showModal}
@@ -189,7 +208,7 @@ const HandleModal = (props) => {
                 <Input.TextArea rows={4} />
             </Form.Item>
             <Form.Item name="operationTime" label={languages["dashBoard.appointments.modal.operationTime"]} {...dateConfig}>
-                <DatePicker.RangePicker />
+                <DatePicker.RangePicker onChange={props.onDateClick} />
             </Form.Item>
         </div>
     ) : (<></>);

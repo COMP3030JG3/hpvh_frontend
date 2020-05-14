@@ -1,13 +1,14 @@
 import './less/my.less'
 import React from "react";
 import Profile from './Profile'
-import { Row, Col, Card } from 'antd';
+import { Row, Col, Card, Affix, Avatar } from 'antd';
 import ProfileEditor from "./ProfileEditor"
 import Appointments from "./Appointments"
 import NewAppointment from "./NewAppointment"
 import Tracks from "./Tracks"
 import QueueAnim from 'rc-queue-anim';
-
+import { Link } from 'react-router-dom';
+import { CommentOutlined } from '@ant-design/icons'
 
 
 export default (props) => {
@@ -76,6 +77,18 @@ export default (props) => {
                     </QueueAnim>
                 </Col>
                 <Col span={6} >
+                    <Affix style={{ position: "fixed", bottom: 12, right: 24 }}  >
+                        <div style={{ marginBottom: "24px" }}>
+                            <Link to='/discussion'>
+                                <Avatar
+                                    onClick={() => { }}
+                                    className="fixed-widgets fixed-widgets-back"
+                                    size={64}
+                                    icon={<CommentOutlined />}
+                                />
+                            </Link>
+                        </div>
+                    </Affix>
                     <QueueAnim
                         delay={100}
                         duration={1000}

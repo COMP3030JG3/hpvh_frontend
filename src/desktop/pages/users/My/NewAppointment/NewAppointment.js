@@ -73,7 +73,6 @@ export default (props) => {
     function onChange(value, dateString) {
         let s = Number(new Date(value._d.getFullYear(), value._d.getMonth(), value._d.getDate())) / 1000
         setAppointmentDate(s);
-        console.log(s)
     }
 
     function onOk(value) {

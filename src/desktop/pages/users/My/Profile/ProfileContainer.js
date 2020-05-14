@@ -35,6 +35,7 @@ const ProfileContainer = (props) => {
             menuKey={props.myContent}
             onMenuClick={onMenuClick}
             onEditClick={onEditClick}
+            logout={props.logout}
             onLangChange={onLangChange} />
     );
 };
@@ -43,11 +44,13 @@ const mapState = state => ({
     myContent: state.my.myContent,
     lang: state.language,
     loginInfo: state.validation.loginInfo
+
 });
 
 const mapDispatch = dispatch => ({
     switchMyContent: dispatch.my.switchMyContent,
     langChange: dispatch.language.langChange,
+    logout: dispatch.validation.logout
 });
 
 

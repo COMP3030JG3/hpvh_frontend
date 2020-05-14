@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Avatar, Menu, Dropdown, Tooltip } from 'antd';
-import { EditOutlined, ExportOutlined, TranslationOutlined } from '@ant-design/icons';
+import { ExportOutlined, TranslationOutlined, UserOutlined } from '@ant-design/icons';
 const { Meta } = Card;
 
 const messages = {
@@ -31,13 +31,13 @@ export default (props) => {
                             <Dropdown trigger="click" overlay={menu}><TranslationOutlined key="language" /></Dropdown>
                         </Tooltip>,
                         <Tooltip placement="top" title={language["dashBoard.sideMenu.iconTip.logOut"]}>
-                            <ExportOutlined key="logout" />
+                            <ExportOutlined onClick={props.elogout} key="logout" />
                         </Tooltip>,
 
                     ]}
                 >
                     <Meta
-                        avatar={<Avatar size="large" src={data.avatar} alt={data.name} />}
+                        avatar={<Avatar size="large" icon={<UserOutlined />} alt={data.name} />}
                         title={data.name}
                         description={data.description}
                     />

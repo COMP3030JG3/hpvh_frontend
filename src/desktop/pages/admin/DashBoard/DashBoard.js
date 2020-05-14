@@ -1,12 +1,13 @@
 import './less/dashBoard.less'
 import React from "react";
 import SideMenu from './SideMenu'
-import { Row, Col, Card } from 'antd';
+import { Row, Col, Card, Affix, Avatar } from 'antd';
+import { CommentOutlined } from '@ant-design/icons'
 import Appointments from './Appointments';
 import Employees from './Employees';
 import Operations from './Operations';
 import QueueAnim from 'rc-queue-anim';
-
+import { Link } from 'react-router-dom';
 
 
 export default (props) => {
@@ -42,6 +43,7 @@ export default (props) => {
 
     return (
         <div className="dashBoard">
+
             <Row >
                 <Col span={24}>
                     <QueueAnim
@@ -54,10 +56,27 @@ export default (props) => {
                         </div>
                     </QueueAnim>
                 </Col>
+
+                <Col>
+
+                </Col>
+
             </Row>
 
             <Row justify="space-between">
                 <Col span={4} >
+                    <Affix style={{ position: "fixed", bottom: 12, left: 24 }}  >
+                        <div style={{ marginBottom: "24px" }}>
+                            <Link to='/discussion'>
+                                <Avatar
+                                    onClick={() => { }}
+                                    className="fixed-widgets fixed-widgets-back"
+                                    size={64}
+                                    icon={<CommentOutlined />}
+                                />
+                            </Link>
+                        </div>
+                    </Affix>
                     <QueueAnim
                         delay={100}
                         duration={1000}
