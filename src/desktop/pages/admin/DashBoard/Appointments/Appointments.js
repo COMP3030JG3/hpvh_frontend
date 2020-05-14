@@ -17,39 +17,6 @@ import {
 import Search from '../../../../components/Search';
 const { Column, ColumnGroup } = Table;
 
-const messages = {
-    "dashBoard.appointments.colTitle.id": "No.",
-    "dashBoard.appointments.colTitle.userName": "Name",
-    "dashBoard.appointments.colTitle.userId": "User Id",
-    "dashBoard.appointments.colTitle.type": "Type",
-    "dashBoard.appointments.colTitle.status": "Status",
-    "dashBoard.appointments.colTitle.petName": "Pet Name",
-    "dashBoard.appointments.colTitle.species": "Species",
-    "dashBoard.appointments.colTitle.gender": "Gender",
-    "dashBoard.appointments.colTitle.meetingCity": "Meeting City",
-    "dashBoard.appointments.colTitle.contactNumber": "Contact Number",
-    "dashBoard.appointments.colTitle.appointmentTime": "Appointment Time",
-    "dashBoard.appointments.colTitle.createTime": "Create Time",
-    "dashBoard.appointments.colTitle.lastChangedTime": "Last Changed Time",
-    "dashBoard.appointments.colTitle.description": "Description",
-    "dashBoard.appointments.colTitle.diagnosis": "Diagnosis",
-    "dashBoard.appointments.colTitle.needOperation": "Need Operation",
-    "dashBoard.appointments.colTitle.operationId": "Operation No.",
-    "dashBoard.appointments.row.more": "more",
-    "dashBoard.appointments.row.handle": "handle",
-    "dashBoard.appointments.drawer.title": "appointments detail",
-    "dashBoard.appointments.modal.title": "complete the appointment",
-    "dashBoard.appointments.modal.submit": "Submit",
-    "dashBoard.appointments.modal.normal": "Normal",
-    "dashBoard.appointments.modal.type": "Type",
-    "dashBoard.appointments.modal.emergency": "Emergency",
-    "dashBoard.appointments.modal.diagnosis": "Diagnosis Result",
-    "dashBoard.appointments.modal.needOperation": "Need Operation",
-    "dashBoard.appointments.modal.yes": "Yes",
-    "dashBoard.appointments.modal.no": "No",
-    "dashBoard.appointments.modal.operationPlan": "Operation Plan",
-    "dashBoard.appointments.modal.operationTime": "Operation Time"
-};
 
 
 
@@ -71,7 +38,7 @@ export default (props) => {
 
     }
 
-    const languages = messages;
+    const languages = props.messages;
 
     const onHandleClick = () => {
         setShowModal(true);

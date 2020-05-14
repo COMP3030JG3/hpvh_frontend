@@ -13,6 +13,8 @@ export default (props) => {
     const { data } = props;
     const language = props.messages;
 
+
+
     const menu = (
         <Menu onClick={props.onLangChange} >
             <Menu.Item key="en">English</Menu.Item>

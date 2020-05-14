@@ -16,31 +16,7 @@ import {
 } from "antd"
 const { Column } = Table;
 
-const messages = {
-    "dashBoard.operations.colTitle.id": "No.",
-    "dashBoard.operations.colTitle.userName": "Name",
-    "dashBoard.operations.colTitle.userId": "User Id",
-    "dashBoard.operations.colTitle.status": "Status",
-    "dashBoard.operations.colTitle.cost": "Cost",
-    "dashBoard.operations.colTitle.petName": "Pet Name",
-    "dashBoard.operations.colTitle.species": "Species",
-    "dashBoard.operations.colTitle.gender": "Gender",
-    "dashBoard.operations.colTitle.contactNumber": "Contact Number",
-    "dashBoard.operations.colTitle.createTime": "Create Time",
-    "dashBoard.operations.colTitle.startTime": "Start Time",
-    "dashBoard.operations.colTitle.endTime": "End Time",
-    "dashBoard.operations.colTitle.description": "Description",
-    "dashBoard.operations.colTitle.diagnosis": "Diagnosis",
-    "dashBoard.operations.colTitle.operationPlan": "Operation Plan",
-    "dashBoard.operations.colTitle.appointmentId": "Related Appointment Id",
-    "dashBoard.operations.row.more": "more",
-    "dashBoard.operations.row.handle": "handle",
-    "dashBoard.operations.drawer.title": "operations detail",
-    "dashBoard.operations.modal.title": "complete the operation",
-    "dashBoard.operations.modal.submit": "Submit",
-    "dashBoard.operations.modal.cost": "Cost:",
 
-};
 
 
 
@@ -61,7 +37,7 @@ export default (props) => {
 
     }
 
-    const languages = messages;
+    const languages = props.messages;
 
     const onHandleClick = () => {
         setShowModal(true);

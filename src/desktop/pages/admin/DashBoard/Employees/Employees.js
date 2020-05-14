@@ -15,22 +15,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import Search from '../../../../components/Search'
 const { Column, ColumnGroup } = Table;
 
-const messages = {
-    "dashBoard.employees.colTitle.id": "No.",
-    "dashBoard.employees.colTitle.name": "Name",
-    "dashBoard.employees.colTitle.level": "Level",
-    "dashBoard.employees.row.edit": "Edit",
-    "dashBoard.employees.editModal.title": "edit",
-    "dashBoard.employees.addModal.title": "add",
-    "dashBoard.employees.modal.name": "Name:",
-    "dashBoard.employees.modal.password": "Password:",
-    "dashBoard.employees.modal.level": "Level:",
-    "dashBoard.employees.modal.submit": "Submit",
-    "dashBoard.employees.modal.employee": "Employee",
-    "dashBoard.employees.modal.administrator": "Administrator"
 
-
-};
 
 
 
@@ -50,7 +35,7 @@ export default (props) => {
     }
 
     const { data, page } = props
-    const languages = messages;
+    const languages = props.messages;
 
 
     const onEditClick = (records) => {
