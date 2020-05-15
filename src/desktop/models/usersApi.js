@@ -114,7 +114,12 @@ export default {
         },
         async changePassword(data, rootState) {
             authRequest.post('/customer/password/modify', data).then(res => {
-                message.success('success change password')
+                if (res.data.code === 201) {
+                    message.success('success to change password')
+                } else {
+                    message.error('fail to change password, check your password')
+                }
+
 
             }).catch(() => {
                 message.error('fail to change password')

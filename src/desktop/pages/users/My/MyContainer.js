@@ -8,7 +8,7 @@ const MyContainer = (props) => {
     console.log(props)
     return (
 
-        <My myContent={props.myContent} />
+        <My onLinkClick={props.setDiscussionEntry} myContent={props.myContent} />
     );
 };
 
@@ -20,7 +20,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
     switchMyContent: dispatch.my.switchMyContent,
-
+    setDiscussionEntry: dispatch.discussion.setDiscussionEntry
 });
 
 

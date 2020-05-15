@@ -14,7 +14,7 @@ class OperationsContainer extends React.Component {
             this.props.getOperations({ index: 1 });
         }
     }
-    e
+
 
     render() {
 
@@ -41,7 +41,7 @@ class OperationsContainer extends React.Component {
             this.props.getOperations({ index: e.current });
         }
         const onComplete = (v) => {
-            console.log(v)
+            this.props.completeOperation(v)
         }
 
         return (

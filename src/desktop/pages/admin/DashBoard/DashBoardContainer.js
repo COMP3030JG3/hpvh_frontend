@@ -6,7 +6,7 @@ import { injectIntl } from 'react-intl';
 const DashBoardContainer = (props) => {
     console.log(props)
     return (
-        <DashBoard dashBoardContent={props.dashBoardContent} />
+        <DashBoard onLinkClick={props.setDiscussionEntry} dashBoardContent={props.dashBoardContent} />
     );
 }
 
@@ -18,7 +18,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
     switchDashBoardContent: dispatch.dashBoard.switchDashBoardContent,
-
+    setDiscussionEntry: dispatch.discussion.setDiscussionEntry
 });
 
 export default injectIntl(connect(mapState, mapDispatch)(DashBoardContainer));

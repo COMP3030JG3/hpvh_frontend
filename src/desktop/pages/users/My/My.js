@@ -81,7 +81,7 @@ export default (props) => {
                         <div style={{ marginBottom: "24px" }}>
                             <Link to='/discussion'>
                                 <Avatar
-                                    onClick={() => { }}
+                                    onClick={() => { props.onLinkClick('user') }}
                                     className="fixed-widgets fixed-widgets-back"
                                     size={64}
                                     icon={<CommentOutlined />}

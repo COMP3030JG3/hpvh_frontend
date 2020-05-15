@@ -67,9 +67,9 @@ export default (props) => {
                 <Col span={4} >
                     <Affix style={{ position: "fixed", bottom: 12, left: 24 }}  >
                         <div style={{ marginBottom: "24px" }}>
-                            <Link to='/discussion'>
+                            <Link to='/discussion' onClick={() => props.onLinkClick('employee')} >
                                 <Avatar
-                                    onClick={() => { }}
+
                                     className="fixed-widgets fixed-widgets-back"
                                     size={64}
                                     icon={<CommentOutlined />}

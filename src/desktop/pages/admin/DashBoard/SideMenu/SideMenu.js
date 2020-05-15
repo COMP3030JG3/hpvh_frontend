@@ -57,7 +57,7 @@ export default (props) => {
                     >
                         <Menu.Item key="appointments">{language["dashBoard.sideMenu.menu.appointments"] || "appointments"}</Menu.Item>
                         <Menu.Item key="operations">{language["dashBoard.sideMenu.menu.operations"] || "operations"}</Menu.Item>
-                        <Menu.Item key="employees">{language["dashBoard.sideMenu.menu.employees"] || "employees"}</Menu.Item>
+                        {data.description === 'administrator' ? <Menu.Item key="employees">{language["dashBoard.sideMenu.menu.employees"] || "employees"}</Menu.Item> : ""}
                     </Menu>
 
                 </Card>

@@ -5,33 +5,13 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 export default (props) => {
 
 
-    const data = {
-        question: {
-            avatar: "",
-            userId: 1,
-            userName: "John",
-            id: 1,
-            question: "This is Question".repeat(12),
-            createTime: "2020-05-02 22:22",
-            replies: 3
-        },
-        answers: [1, 2, 3, 4, 5, 6, 7, 8].map(item => (
-            {
-                questionId: 1,
-                userId: item % 2,
-                userName: "John",
-                id: item,
-                answer: "hhh",
-                createTime: "2020-05-02 22:22",
-            }
-        ))
-    }
+    const data = props.data
 
 
     const answerList = data.answers.map(item => (
         <div key={item.id}>
             <Card
-                bodyStyle={{ padding: "12px 16px" }}
+                bodyStyle={item.user_type === 'employee' ? { padding: "12px 16px", backgroundColor: '#fffbf0' } : { padding: "12px 16px" }}
                 className="antCard"
                 hoverable={true}
                 bordered={false}
@@ -43,10 +23,10 @@ export default (props) => {
                 }}
             >
                 <Row >
-                    <Col>
+                    <Col >
                         <Row>
                             <Col style={{ margin: "0 auto" }}>
-                                <Avatar src={data.question.avatar} />
+                                <Avatar src={item.avatar} />
                             </Col>
                         </Row>
                         <Row >
@@ -60,7 +40,7 @@ export default (props) => {
                             </Col>
                         </Row>
                     </Col>
-                    <Col style={{ marginLeft: "18px" }}>
+                    <Col style={{ borderLeft: "1px solid #f0f0f0", paddingLeft: "12px", marginLeft: "18px" }}>
                         <div>{item.answer}</div>
                     </Col>
                 </Row>

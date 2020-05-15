@@ -46,7 +46,7 @@ export default (props) => {
 
 
 
-    const languages = messages;
+    const languages = props.messages;
 
     const onFinish = values => {
         console.log(values);

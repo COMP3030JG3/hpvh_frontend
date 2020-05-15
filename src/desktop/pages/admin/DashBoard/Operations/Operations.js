@@ -13,6 +13,7 @@ import {
     Tag,
     DatePicker,
     Avatar,
+    InputNumber,
 } from "antd"
 const { Column } = Table;
 
@@ -51,7 +52,7 @@ export default (props) => {
     }
 
     const onFinish = values => {
-        console.log('Finish:', values);
+        props.onComplete({ id: datad[record].id, ...values });
     };
 
     return (
@@ -142,8 +143,8 @@ const HandleModal = (props) => {
 
                     onFinish={props.onFinish}
                 >
-                    <Form.Item name={'name'} label={languages["dashBoard.operations.modal.cost"]} >
-                        <Input />
+                    <Form.Item name={'surgery_cost'} label={languages["dashBoard.operations.modal.cost"]} >
+                        <InputNumber min={1} max={100000} />
                     </Form.Item>
 
 

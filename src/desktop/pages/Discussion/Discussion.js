@@ -9,8 +9,10 @@ export default (props) => {
     const [showQuestionModal, setShowQuestionModal] = useState(false);
     const [showAnswerModal, setShowAnswerModal] = useState(false);
     const [showSearchModal, setShowSearchModal] = useState(false);
+    const [questionId, setQuestionId] = useState(0);
+    const [ques, setQues] = useState({});
 
-    const data = [1, 2, 3, 4, 5, 6, 7, 8].map(item => ({
+    const datae = [1, 2, 3, 4, 5, 6, 7, 8].map(item => ({
         avatar: "",
         userId: item,
         userName: "John",
@@ -19,15 +21,28 @@ export default (props) => {
         createTime: "2020-05-02 22:22",
         replies: 3
     }))
+    const data = props.data || []
 
 
     const onViewClick = (item) => {
-        console.log(item);
+        setQuestionId(item.id)
+        setQues(item)
+        props.onAnswerClick(item.id)
         setShowAnswers(true);
     }
-
+    const back = () => {
+        setShowAnswers(false)
+        props.resetAnswer()
+    }
     const onBackClick = (isAnswer) => {
-        isAnswer ? setShowAnswers(false) : console.log(props.history);
+        isAnswer ?
+            back()
+            : props.entry === 'user' ?
+                props.history.push('/my')
+                : props.entry === 'employee' ?
+                    props.history.push('/dashboard')
+                    : props.history.push('/')
+
     }
 
     const onAddClick = (isAnswer) => {
@@ -36,6 +51,21 @@ export default (props) => {
 
     const onSearchClick = (isAnswer) => {
         setShowSearchModal(true);
+    }
+
+    const onQuestionFinish = (v) => {
+
+        props.onQuestionFinish(v)
+    }
+
+    const onAnswerFinish = (v) => {
+        let type = props.entry === 'user' ? 'customer' : 'employee'
+        let d = {
+            content: v.answer,
+            user_type: type,
+            question_id: questionId
+        }
+        props.onAnswerFinish(d)
     }
 
 
@@ -50,7 +80,7 @@ export default (props) => {
                 className="antCard"
                 hoverable={true}
                 bordered={false}
-                onClick={() => onViewClick(item.id)}
+                onClick={() => onViewClick(item)}
                 title={
                     <div>
                         <Avatar src={item.avatar} style={{ marginRight: "12px" }} />
@@ -119,12 +149,26 @@ export default (props) => {
                             />
                         </div>
                         <div style={{ marginBottom: "24px" }}>
-                            <Avatar
-                                onClick={() => onAddClick(showAnswers)}
-                                className="fixed-widgets fixed-widgets-add"
-                                size={64}
-                                icon={<PlusOutlined />}
-                            />
+                            {
+                                props.entry === 'anonymous' ?
+                                    <></>
+                                    : props.entry === 'user' ?
+                                        <Avatar
+                                            onClick={() => onAddClick(showAnswers)}
+                                            className="fixed-widgets fixed-widgets-add"
+                                            size={64}
+                                            icon={<PlusOutlined />}
+                                        />
+                                        : showAnswers ?
+                                            <Avatar
+                                                onClick={() => onAddClick(showAnswers)}
+                                                className="fixed-widgets fixed-widgets-add"
+                                                size={64}
+                                                icon={<PlusOutlined />}
+                                            />
+                                            : <></>
+                            }
+
                         </div>
                         <div>
                             <Avatar
@@ -138,16 +182,16 @@ export default (props) => {
                 </Col>
             </Row>
 
-            {showAnswers ? <Answer setShowAnswers={(e) => setShowAnswers(e)} /> : question}
+            {showAnswers ? <Answer question={ques} questionId={questionId} setShowAnswers={(e) => setShowAnswers(e)} /> : question}
 
             <HandleQuestionModal
-                onFinish={onFinish}
+                onFinish={onQuestionFinish}
                 showModal={showQuestionModal}
                 setShowModal={setShowQuestionModal}
             />
 
             <HandleAnswerModal
-                onFinish={onFinish}
+                onFinish={onAnswerFinish}
                 showModal={showAnswerModal}
                 setShowModal={setShowAnswerModal}
             />
@@ -202,7 +246,7 @@ const HandleQuestionModal = (props) => {
                     name="edit"
                     initialValues={{}} onFinish={props.onFinish}
                 >
-                    <Form.Item name="question"
+                    <Form.Item name="content"
                         label={"Question:"}
                     >
                         <Input.TextArea rows={6} />
