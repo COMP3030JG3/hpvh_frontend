@@ -10,8 +10,19 @@ class DiscussionContainer extends React.Component {
         if (this.props.firstLoad.questions) {
             this.props.getQuestions({ index: 1 });
         }
+        window.addEventListener('scroll', this.bindScroll)
     }
 
+    componentDidUpdate() {
+        if (this.props.firstLoad.questions) {
+            this.props.getQuestions({ index: 1 });
+        }
+    }
+
+    componentWillUnmount() {
+        // 移除滚动监听
+        window.removeEventListener('scroll', this.bindScroll);
+    }
 
 
 
@@ -53,6 +64,7 @@ class DiscussionContainer extends React.Component {
                 resetAnswer={this.props.resetAnswer}
                 onAnswerFinish={onAnswerFinish}
                 onAnswerClick={onAnswerClick}
+                firstLoadReducer={this.props.firstLoadReducer}
             />
         );
     }
@@ -72,7 +84,7 @@ const mapDispatch = dispatch => ({
     createAnswer: dispatch.discussion.createAnswer,
     createQuestion: dispatch.discussion.createQuestion,
     resetAnswer: dispatch.discussion.resetAnswer,
-
+    firstLoadReducer: dispatch.discussion.firstLoadReducer,
 });
 
 export default injectIntl(connect(mapState, mapDispatch)(DiscussionContainer));

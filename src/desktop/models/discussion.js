@@ -30,6 +30,9 @@ export default {
         },
         resetAnswer(state, key) {
             return { ...state, answers: [] };
+        },
+        resetQuestion(state, key) {
+            return { ...state, questions: [] };
         }
     },
     effects: {

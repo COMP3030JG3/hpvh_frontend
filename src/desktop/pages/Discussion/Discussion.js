@@ -23,6 +23,11 @@ export default (props) => {
     }))
     const data = props.data || []
 
+    window.onscroll = function () {
+
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+    }
 
     const onViewClick = (item) => {
         setQuestionId(item.id)
@@ -225,6 +230,7 @@ const HandleQuestionModal = (props) => {
 
     const onCancel = () => {
         setShowModal(false);
+        props.firstLoadReducer({ answers: true })
     };
 
 
@@ -279,6 +285,7 @@ const HandleAnswerModal = (props) => {
 
     const onCancel = () => {
         setShowModal(false);
+        props.firstLoadReducer({ answers: true })
     };
 
 
