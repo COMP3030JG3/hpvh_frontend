@@ -31,7 +31,8 @@ class EmployeesContainer extends React.Component {
             let { item, ...p } = this.props.employees
             page = p
         }
-        const onPageChange = (e) => {
+        const onPageChange = (e, filters) => {
+            console.log(filters)
             this.props.getEmployees({ index: e.current });
         }
         const onComplete = (v) => {
@@ -39,11 +40,19 @@ class EmployeesContainer extends React.Component {
         }
 
         const onEditClick = (v) => {
-            this.props.modifyEmployee(v);
+            this.props.modifyEmployee(v).then(
+                () => { this.props.getEmployees({ index: 1 }) }
+            );
 
         }
         const onAddClick = (v) => {
-            this.props.addEmployee(v);
+            this.props.addEmployee(v).then(
+                () => { this.props.getEmployees({ index: 1 }) }
+            );
+        }
+
+        const onSearch = (v) => {
+            this.props.getEmployees(v);
         }
 
         return (
@@ -51,6 +60,7 @@ class EmployeesContainer extends React.Component {
                 messages={this.props.intl.messages}
                 data={data}
                 page={page}
+                onSearch={onSearch}
                 onPageChange={onPageChange}
                 onEditFinish={onEditClick}
                 onAddFinish={onAddClick}

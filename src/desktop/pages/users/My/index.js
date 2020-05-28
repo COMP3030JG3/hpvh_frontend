@@ -4,6 +4,6 @@ import MyContainer from "./MyContainer"
 
 export default (props) => {
     return (
-        <MyContainer />
+        <MyContainer {...props} />
     );
 };

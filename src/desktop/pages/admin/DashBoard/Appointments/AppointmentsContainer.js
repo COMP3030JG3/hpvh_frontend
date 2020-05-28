@@ -61,15 +61,19 @@ class AppointmentsContainer extends React.Component {
             page = p
         }
         const onPageChange = (e) => {
-            this.props.getAppointments({ index: e.current });
+            this.props.getAppointments(e);
         }
         const onComplete = (v) => {
             console.log(v)
-            this.props.completeAppointment(v);
+            this.props.completeAppointment(v).then(
+                () => { this.props.getAppointments({ index: 1 }); }
+            );
         }
-
+        const onSearch = (v) => {
+            this.props.getAppointments(v);
+        }
         return (
-            <Appointments messages={this.props.intl.messages} data={data} page={page} onComplete={onComplete} onPageChange={onPageChange} />
+            <Appointments messages={this.props.intl.messages} onSearch={onSearch} data={data} page={page} onComplete={onComplete} onPageChange={onPageChange} />
         );
     }
 }

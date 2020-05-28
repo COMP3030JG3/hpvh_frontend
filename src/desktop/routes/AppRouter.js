@@ -87,7 +87,7 @@ class AppRouter extends React.Component {
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/elogin" component={ELogin} />
                     <Route exact path="/signup" component={Signup} />
-                    <PrivateRoute exact path="/my" ><My /></PrivateRoute>
+                    <PrivateRoute exact path="/my" ><My history={history} /></PrivateRoute>
                     <EPrivateRoute exact path="/dashboard" ><DashBoard /></EPrivateRoute>
                     <Route exact path="/discussion" history={history} component={Discussion} />
                     <Route exact path="/" component={Home} />

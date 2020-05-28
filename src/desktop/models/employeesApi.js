@@ -34,7 +34,7 @@ export default {
 
         async getAppointments({ index, ...data }, rootState) {
             this.firstLoadReducer({ appointments: true })
-            authRequestE.get('/employee/appointment/' + index, {
+            await authRequestE.get('/employee/appointment/' + index, {
                 params: {
                     ...data
                 }
@@ -54,7 +54,7 @@ export default {
         },
         async getOperations({ index, ...data }, rootState) {
             this.firstLoadReducer({ operations: true })
-            authRequestE.get('/employee/operation/' + index, {
+            await authRequestE.get('/employee/operation/' + index, {
                 params: {
                     ...data
                 }
@@ -80,9 +80,10 @@ export default {
                     pet_name: data.pet_name,
                     appointment_id: id
                 }
-                authRequestE.post('/employee/operation/create', d).then(res => {
+                await authRequestE.post('/employee/operation/create', d).then(res => {
                     let dd = {
                         appointment_status: 'completed',
+                        appointment_level: data.appointment_level,
                         needOperation: data.needOperation,
                         appointment_type: data.appointment_type,
                         diagnosis: data.diagnosis,
@@ -100,11 +101,12 @@ export default {
             } else {
                 let dd = {
                     appointment_status: 'completed',
+                    appointment_level: data.appointment_level,
                     needOperation: data.needOperation,
                     appointment_type: data.appointment_type,
                     diagnosis: data.diagnosis,
                 }
-                authRequestE.post('/employee/appointment/modify/' + id, dd).then(res => {
+                await authRequestE.post('/employee/appointment/modify/' + id, dd).then(res => {
 
                     message.success('complete appointment')
                 }).catch(() => {
@@ -114,21 +116,21 @@ export default {
 
         },
         async completeOperation({ id, ...data }, rootState) {
-            authRequestE.post('/employee/operation/modify/' + id, data).then(res => {
+            await authRequestE.post('/employee/operation/modify/' + id, data).then(res => {
                 message.success('success complete operation')
             }).catch(() => {
                 message.error('fail to complete operation')
             })
         },
         async addEmployee(data, rootState) {
-            authRequestE.post('/employee/add', data).then(res => {
+            await authRequestE.post('/employee/add', data).then(res => {
                 message.success('success add employee')
             }).catch(() => {
                 message.error('fail to add employee')
             })
         },
         async modifyEmployee({ id, ...data }, rootState) {
-            authRequestE.post('/employee/modify/' + id, data).then(res => {
+            await authRequestE.post('/employee/modify/' + id, data).then(res => {
                 message.success('success modify employee')
             }).catch(() => {
                 message.error('fail to modify employee')
@@ -136,7 +138,7 @@ export default {
         },
         async getEmployees({ index, ...data }, rootState) {
             this.firstLoadReducer({ employees: true })
-            authRequestE.get('/employee/' + index, {
+            await authRequestE.get('/employee/' + index, {
                 params: {
                     ...data
                 }

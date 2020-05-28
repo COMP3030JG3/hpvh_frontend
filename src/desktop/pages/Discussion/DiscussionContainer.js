@@ -10,29 +10,33 @@ class DiscussionContainer extends React.Component {
         if (this.props.firstLoad.questions) {
             this.props.getQuestions({ index: 1 });
         }
-        window.addEventListener('scroll', this.bindScroll)
+
     }
 
     componentDidUpdate() {
-        if (this.props.firstLoad.questions) {
-            this.props.getQuestions({ index: 1 });
-        }
-    }
 
-    componentWillUnmount() {
-        // 移除滚动监听
-        window.removeEventListener('scroll', this.bindScroll);
     }
 
 
+
+    componentWillMount() {
+
+        window.addEventListener('scroll', () =>
+            console.log(123, document.body.scrollTop || document.documentElement.scrollTop)
+        )
+    }
 
     render() {
 
         const onQuestionFinish = (v) => {
             this.props.createQuestion(v)
+            this.props.resetQuestion();
+            this.props.getQuestions({ index: 1 });
         }
         const onAnswerFinish = (v) => {
-            this.props.createAnswer(v)
+            this.props.createAnswer(v);
+            this.props.resetAnswer();
+            this.props.getAnswers({ index: 1, question_id: v.question_id });
         }
         const onAnswerClick = (v) => {
             this.props.getAnswers({ index: 1, question_id: v });
@@ -58,14 +62,29 @@ class DiscussionContainer extends React.Component {
                 )
             }
         }
+        const onQuestionSearch = (e) => {
+            this.props.resetQuestion()
+            this.props.getQuestions({ index: 1, content: e });
+        }
+
         return (
+
             <Discussion {...this.props} data={data}
+                resetQuestion={this.props.resetQuestion}
+                getQuestions={this.props.getQuestions}
+                getAnswers={this.props.getAnswers}
+                onQuestionSearch={onQuestionSearch}
                 onQuestionFinish={onQuestionFinish}
                 resetAnswer={this.props.resetAnswer}
+                questionsIndex={this.props.questionsIndex}
+                answersIndex={this.props.answersIndex}
+                answersTotal={this.props.answersTotal}
+                questionsTotal={this.props.questionsTotal}
                 onAnswerFinish={onAnswerFinish}
                 onAnswerClick={onAnswerClick}
                 firstLoadReducer={this.props.firstLoadReducer}
             />
+
         );
     }
 }
@@ -75,7 +94,11 @@ const mapState = state => ({
     entry: state.discussion.entry,
     questions: state.discussion.questions,
     answers: state.discussion.answers,
-    firstLoad: state.discussion.firstLoad
+    questionsIndex: state.discussion.questionsIndex,
+    answersIndex: state.discussion.answersIndex,
+    firstLoad: state.discussion.firstLoad,
+    questionsTotal: state.discussion.questionsTotal,
+    answersTotal: state.discussion.answersTotal
 });
 
 const mapDispatch = dispatch => ({
@@ -84,6 +107,7 @@ const mapDispatch = dispatch => ({
     createAnswer: dispatch.discussion.createAnswer,
     createQuestion: dispatch.discussion.createQuestion,
     resetAnswer: dispatch.discussion.resetAnswer,
+    resetQuestion: dispatch.discussion.resetQuestion,
     firstLoadReducer: dispatch.discussion.firstLoadReducer,
 });
 

@@ -131,7 +131,7 @@ export default (props) => {
         let pet = props.historyPet[index]
         form.setFieldsValue({
             pet_name: pet.pet_name,
-            species: pet.species,
+            species: pet.pet_species,
             pet_gender: pet.pet_gender
         })
     }

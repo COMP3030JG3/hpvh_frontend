@@ -38,14 +38,16 @@ class OperationsContainer extends React.Component {
             page = p
         }
         const onPageChange = (e) => {
-            this.props.getOperations({ index: e.current });
+            this.props.getOperations(e);
         }
         const onComplete = (v) => {
-            this.props.completeOperation(v)
+            this.props.completeOperation(v).then(() => { this.props.getOperations({ index: 1 }); })
         }
-
+        const onSearch = (v) => {
+            this.props.getOperations(v);
+        }
         return (
-            <Operations messages={this.props.intl.messages} data={data} page={page} onComplete={onComplete} onPageChange={onPageChange} />
+            <Operations messages={this.props.intl.messages} onSearch={onSearch} data={data} page={page} onComplete={onComplete} onPageChange={onPageChange} />
         );
     }
 }

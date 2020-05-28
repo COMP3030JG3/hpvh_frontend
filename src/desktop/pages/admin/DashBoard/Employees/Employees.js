@@ -12,7 +12,7 @@ import {
 } from "antd"
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
-import Search from '../../../../components/Search'
+import search from '../../../../components/search'
 const { Column, ColumnGroup } = Table;
 
 
@@ -27,6 +27,8 @@ export default (props) => {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchColumn] = useState('');
     const [record, setRecord] = useState({});
+    const [searchIdValue, setSearchIdValue] = useState('');
+    const [searchUsernameValue, setSearchUsernameValue] = useState('');
     const daata = {
         index: 1,
         total: 1,
@@ -47,6 +49,7 @@ export default (props) => {
     }
 
 
+
     const onAddFinish = values => {
         props.onAddFinish(values)
     };
@@ -55,7 +58,23 @@ export default (props) => {
         props.onEditFinish(v)
     };
 
-    const search = new Search();
+    const onIdSearch = () => {
+        props.onSearch({ index: 1, id: searchIdValue });
+    }
+    const onIdReset = () => {
+        setSearchIdValue('')
+        props.onSearch({ index: 1 });
+    }
+
+    const onUsernameSearch = () => {
+        props.onSearch({ index: 1, username: searchUsernameValue });
+    }
+    const onUsernameReset = () => {
+        setSearchUsernameValue('')
+        props.onSearch({ index: 1 });
+    }
+
+    const levelFilter = [{ text: 'administrator', value: 'administrator' }, { text: 'employee', value: 'employee' }]
 
     return (
         <div>
@@ -64,11 +83,12 @@ export default (props) => {
                 <Col span={24} offset={0}>
                     <Table dataSource={data}
                         onChange={props.onPageChange}
+                        scroll={{ y: 450 }}
                         pagination={{ defaultCurrent: 1, total: page.total, simple: true, pageSize: 15 }}
                     >
-                        <Column title={languages["dashBoard.employees.colTitle.id"]} dataIndex="id" key="id" fixed='left' width={100} {...search.getColumnSearchProps('No.')} />
-                        <Column title={languages["dashBoard.employees.colTitle.name"]} dataIndex="username" key="username" width={200} />
-                        <Column title={languages["dashBoard.employees.colTitle.level"]} dataIndex="level" key="level" width={200} />
+                        <Column title={languages["dashBoard.employees.colTitle.id"]} dataIndex="id" key="id" fixed='left' width={100} {...search(languages, setSearchIdValue, onIdSearch, onIdReset)} />
+                        <Column title={languages["dashBoard.employees.colTitle.name"]} dataIndex="username" key="username" width={200} {...search(languages, setSearchUsernameValue, onUsernameSearch, onUsernameReset)} />
+                        <Column title={languages["dashBoard.employees.colTitle.level"]} dataIndex="level" key="level" width={200} filters={levelFilter} />
                         <Column title=""
                             render={records => (
                                 <Button type="link" onClick={e => {

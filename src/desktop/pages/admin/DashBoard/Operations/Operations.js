@@ -15,6 +15,8 @@ import {
     Avatar,
     InputNumber,
 } from "antd"
+import search from '../../../../components/search'
+
 const { Column } = Table;
 
 
@@ -26,16 +28,20 @@ export default (props) => {
     const [showDrawer, setShowDrawer] = useState(false);
 
     const [showModal, setShowModal] = useState(false);
+
+    const [searchIdValue, setSearchIdValue] = useState('');
+    const [searchAppointmentIdValue, setSearchAppointmentIdValue] = useState('');
+    const [searchPetNameValue, setSearchPetNameValue] = useState('');
     const [record, setRecord] = useState(0);
     const { data, page } = props;
 
     const datad = [];
     if (data !== null) {
         datad.push(...data);
-        console.log(datad[0])
     } else {
-        datad.push({});
-
+        for (let i = 0; i < record + 1; i++) {
+            datad.push({});
+        }
     }
 
     const languages = props.messages;
@@ -54,19 +60,60 @@ export default (props) => {
     const onFinish = values => {
         props.onComplete({ id: datad[record].id, ...values });
     };
+    const onIdSearch = () => {
+        props.onSearch({ index: 1, id: searchIdValue });
+    }
+    const onIdReset = () => {
+        setSearchIdValue('')
+        props.onSearch({ index: 1 });
+    }
 
+    const onAppointmentIdSearch = () => {
+        props.onSearch({ index: 1, appointment_id: searchAppointmentIdValue });
+    }
+    const onAppointmentIdReset = () => {
+        setSearchAppointmentIdValue('')
+        props.onSearch({ index: 1 });
+    }
+
+
+    const onPetNameSearch = () => {
+        props.onSearch({ index: 1, pet_name: searchPetNameValue });
+    }
+    const onPetNameReset = () => {
+        setSearchPetNameValue('')
+        props.onSearch({ index: 1 });
+
+    }
+
+    const onPageChange = (e) => {
+        let data = {
+            index: e.current
+        }
+        if (searchPetNameValue !== '') {
+            data.pet_name = searchPetNameValue
+        }
+        if (searchAppointmentIdValue !== '') {
+            data.appointment_id = searchAppointmentIdValue
+        }
+        if (searchIdValue !== '') {
+            data.id = searchIdValue
+        }
+        props.onPageChange(data);
+        console.log(data)
+    }
     return (
         <div>
             <Row>
                 <Col span={24} offset={0}>
                     <Table dataSource={data}
-                        onChange={props.onPageChange}
-
+                        onChange={onPageChange}
+                        scroll={{ x: 1600, y: 450 }}
                         pagination={{ defaultCurrent: 1, total: page.total, simple: true, pageSize: 15 }}
                     >
-                        <Column title={languages["dashBoard.operations.colTitle.id"]} dataIndex="id" key="id" fixed='left' />
-                        <Column title={languages["dashBoard.operations.colTitle.appointmentId"]} dataIndex="appointment_id" key="appointment_id" />
-                        <Column title={languages["dashBoard.operations.colTitle.petName"]} dataIndex="pet_name" key="pet_name" />
+                        <Column title={languages["dashBoard.operations.colTitle.id"]} dataIndex="id" key="id" fixed='left' {...search(languages, setSearchIdValue, onIdSearch, onIdReset)} />
+                        <Column title={languages["dashBoard.operations.colTitle.appointmentId"]} dataIndex="appointment_id" key="appointment_id" {...search(languages, setSearchAppointmentIdValue, onAppointmentIdSearch, onAppointmentIdReset)} />
+                        <Column title={languages["dashBoard.operations.colTitle.petName"]} dataIndex="pet_name" key="pet_name" {...search(languages, setSearchPetNameValue, onPetNameSearch, onPetNameReset)} />
                         <Column title={languages["dashBoard.operations.colTitle.cost"]} dataIndex="surgery_cost" key="surgery_cost" />
                         <Column title={languages["dashBoard.operations.colTitle.startTime"]} dataIndex="surgery_begin_time" key="surgery_begin_time" />
                         <Column title={languages["dashBoard.operations.colTitle.endTime"]} dataIndex="release_time" key="release_time" />

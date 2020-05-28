@@ -14,28 +14,31 @@ import {
     DatePicker,
     Avatar,
 } from "antd"
-import Search from '../../../../components/Search';
+import search from '../../../../components/search'
+
 const { Column, ColumnGroup } = Table;
 
 
 
 
 export default (props) => {
-    const search = new Search();
     const [showDrawer, setShowDrawer] = useState(false);
     const [date, setDate] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [record, setRecord] = useState(0);
-
+    const [searchIdValue, setSearchIdValue] = useState('');
+    const [searchUserIdValue, setSearchUserIdValue] = useState('');
+    const [filt, setFilt] = useState({});
+    const [searchPetNameValue, setSearchPetNameValue] = useState('');
     const { data, page } = props;
 
     const datad = [];
     if (data !== null) {
         datad.push(...data);
-        console.log(datad[0])
     } else {
-        datad.push({});
-
+        for (let i = 0; i < record + 1; i++) {
+            datad.push({});
+        }
     }
 
     const languages = props.messages;
@@ -64,40 +67,177 @@ export default (props) => {
             needOperation: values.needOperation,
             operation_plan: values.operationPlan,
             appointment_type: values.type,
+            appointment_level: values.appointment_level,
             diagnosis: values.diagnosis,
             surgery_begin_time: date.begin,
             release_time: date.end,
             pet_name: datad[record].pet_name,
             id: datad[record].app_primary_key
         }
-        props.onComplete(v)
-    };
 
+        props.onComplete(v)
+
+    };
+    const onIdSearch = () => {
+        onSearch({ index: 1, app_primary_key: searchIdValue });
+    }
+    const onIdReset = () => {
+        setSearchIdValue('')
+        onSearch({ index: 1 });
+
+    }
+
+    const onUserIdSearch = () => {
+        onSearch({ index: 1, customer_id: searchUserIdValue });
+    }
+    const onUserIdReset = () => {
+        setSearchUserIdValue('')
+        onSearch({ index: 1 });
+
+    }
+
+
+    const onPetNameSearch = () => {
+        onSearch({ index: 1, pet_name: searchPetNameValue });
+    }
+    const onPetNameReset = () => {
+        setSearchPetNameValue('')
+        onSearch({ index: 1 });
+
+    }
+
+    const onSearch = (e) => {
+        let f = filt;
+        let filter = {};
+        for (let i in f) {
+            if (f[i]) {
+                filter[i] = f[i][0]
+            }
+        }
+        let data = {
+            ...e,
+            ...filter
+        }
+        props.onSearch(data);
+    }
+
+    const onPageChange = (e, f) => {
+        setFilt(f);
+        let filter = {};
+        for (let i in f) {
+            if (f[i]) {
+                filter[i] = f[i][0]
+            }
+        }
+        let data = {
+            index: e.current,
+            ...filter
+        }
+        if (searchPetNameValue !== '') {
+            data.pet_name = searchPetNameValue
+        }
+        if (searchUserIdValue !== '') {
+            data.customer_id = searchUserIdValue
+        }
+        if (searchIdValue !== '') {
+            data.app_primary_key = searchIdValue
+        }
+        props.onPageChange(data);
+        console.log(data)
+    }
+
+    const filters = {
+        type: [
+            { text: 'Normal', value: 'normal' },
+            { text: 'Emergency', value: 'emergency' },
+        ],
+        species: [
+            { text: 'Dog', value: 'dog' },
+            { text: 'Cat', value: 'cat' },
+        ],
+        status: [
+            { text: 'Completed', value: 'completed' },
+            { text: 'Processing', value: 'processing' },
+        ],
+        appointment_level: [
+            { text: '1', value: '1' },
+            { text: '2', value: '2' },
+            { text: '3', value: '3' },
+            { text: '4', value: '4' },
+            { text: '5', value: '5' },
+        ],
+        gender: [
+            { text: 'Male', value: 'male' },
+            { text: 'Female', value: 'female' },
+        ],
+        meetingCity: [
+            { text: 'shanghai', value: 'shanghai' },
+            { text: 'beijing', value: 'beijing' },
+            { text: 'chengdu', value: 'chengdu' },
+        ],
+        needOperation: [
+            { text: 'yes', value: true },
+            { text: 'no', value: false },
+        ],
+    }
+    const setLevelColor = (e) => {
+        switch (e) {
+            case 1:
+                return '#722ed1'
+
+                break;
+            case 2:
+                return '#9254de'
+                break;
+            case 3:
+                return '#b37feb'
+                break;
+            case 4:
+
+                return '#d3adf7'
+                break;
+            case 5:
+                return '#efdbff'
+                break;
+            default:
+                return '#722ed1'
+                break;
+        }
+    }
     return (
         <div>
             <Row>
                 <Col span={24} offset={0}>
                     <Table dataSource={data}
-                        onChange={props.onPageChange}
-                        scroll={{ x: 1600 }}
-                        pagination={{ position: ['bottomcenter'], defaultCurrent: 1, total: page.total, simple: true, pageSize: 15 }}
+                        onChange={onPageChange}
+                        scroll={{ x: 1600, y: 450 }}
+                        pagination={{ position: ['bottomcenter'], defaultCurrent: 1, current: page.index, total: page.total, simple: true, pageSize: 15 }}
                     >
-                        <Column title={languages["dashBoard.appointments.colTitle.id"]} dataIndex="app_primary_key" key="app_primary_key" fixed='left' width={100} />
-                        <Column title={languages["dashBoard.appointments.colTitle.userId"]} dataIndex="customer_id" key="customer_id" fixed='left' width={100} />
-                        <Column title={languages["dashBoard.appointments.colTitle.petName"]} dataIndex="pet_name" key="pet_name" width={100} />
+                        <Column title={languages["dashBoard.appointments.colTitle.id"]} dataIndex="app_primary_key" key="app_primary_key" fixed='left' width={100} {...search(languages, setSearchIdValue, onIdSearch, onIdReset)} />
+                        <Column title={languages["dashBoard.appointments.colTitle.userId"]} dataIndex="customer_id" key="customer_id" fixed='left' width={100} {...search(languages, setSearchUserIdValue, onUserIdSearch, onUserIdReset)} />
+                        <Column title={languages["dashBoard.appointments.colTitle.petName"]} dataIndex="pet_name" key="pet_name" width={100} {...search(languages, setSearchPetNameValue, onPetNameSearch, onPetNameReset)} />
                         <Column title={languages["dashBoard.appointments.colTitle.status"]} dataIndex="appointment_status" key="appointment_status" width={100}
+                            filterMultiple={false} filters={filters.status}
                             render={status => (
                                 <Tag color={status === 'processing' ? 'blue' : 'green'} key={status}>
                                     {status}
                                 </Tag>
                             )} />
-                        <Column title={languages["dashBoard.appointments.colTitle.type"]} dataIndex="appointment_type" key="appointment_type" width={100} />
-                        <Column title={languages["dashBoard.appointments.colTitle.species"]} dataIndex="species" key="species" width={100} />
-                        <Column title={languages["dashBoard.appointments.colTitle.gender"]} dataIndex="pet_gender" key="pet_gender" width={100} />
-                        <Column title={languages["dashBoard.appointments.colTitle.meetingCity"]} dataIndex="address" key="address" />
+                        <Column title={languages["my.appointments.colTitle.appointment_level"]} dataIndex="appointment_level" key="appointment_level" width={100}
+                            render={status => (
+                                <Tag color={setLevelColor(status)} key={status}>
+                                    {status}
+                                </Tag>
+                            )}
+                            filterMultiple={false} filters={filters.appointment_level}
+                        />
+                        <Column title={languages["dashBoard.appointments.colTitle.type"]} dataIndex="appointment_type" key="appointment_type" width={100} filterMultiple={false} filters={filters.type} />
+                        <Column title={languages["dashBoard.appointments.colTitle.species"]} dataIndex="species" key="species" width={100} filterMultiple={false} filters={filters.species} />
+                        <Column title={languages["dashBoard.appointments.colTitle.gender"]} dataIndex="pet_gender" key="pet_gender" width={100} filterMultiple={false} filters={filters.gender} />
+                        <Column title={languages["dashBoard.appointments.colTitle.meetingCity"]} dataIndex="address" key="address" filterMultiple={false} filters={filters.meetingCity} />
                         <Column title={languages["dashBoard.appointments.colTitle.appointmentTime"]} dataIndex="appointment_date" key="appointment_date" />
                         <Column title={languages["dashBoard.appointments.colTitle.createTime"]} dataIndex="date" key="date" />
-                        <Column title={languages["dashBoard.appointments.colTitle.needOperation"]} dataIndex="needOperation" key="needOperation"
+                        <Column title={languages["dashBoard.appointments.colTitle.needOperation"]} dataIndex="needOperation" key="needOperation" filterMultiple={false} filters={filters.needOperation}
                             render={status => (
                                 <Tag color={status === 'yes' ? 'green' : 'red'} key={status}>
                                     {status}
@@ -204,6 +344,16 @@ const HandleModal = (props) => {
                         <Radio.Group buttonStyle="solid">
                             <Radio.Button value="normal">{languages["dashBoard.appointments.modal.normal"]}</Radio.Button>
                             <Radio.Button value="emergency">{languages["dashBoard.appointments.modal.emergency"]}</Radio.Button>
+                        </Radio.Group>
+                    </Form.Item>
+                    <Form.Item name="appointment_level"
+                        label={languages["dashBoard.appointments.modal.appointment_level"]}>
+                        <Radio.Group buttonStyle="solid">
+                            <Radio.Button value="1">1</Radio.Button>
+                            <Radio.Button value="2">2</Radio.Button>
+                            <Radio.Button value="3">3</Radio.Button>
+                            <Radio.Button value="4">4</Radio.Button>
+                            <Radio.Button value="5">5</Radio.Button>
                         </Radio.Group>
                     </Form.Item>
 

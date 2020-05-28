@@ -35,14 +35,16 @@ class TracksContainer extends React.Component {
             page = p
         }
         const onPageChange = (e) => {
-            this.props.getOperations({ index: e.current });
+            this.props.getOperations(e);
         }
         const onComplete = (v) => {
             console.log(v)
         }
-
+        const onSearch = (v) => {
+            this.props.getOperations(v);
+        }
         return (
-            <Tracks messages={this.props.intl.messages} data={data} page={page} onComplete={onComplete} onPageChange={onPageChange} />
+            <Tracks messages={this.props.intl.messages} data={data} onSearch={onSearch} page={page} onComplete={onComplete} onPageChange={onPageChange} />
         );
     }
 }

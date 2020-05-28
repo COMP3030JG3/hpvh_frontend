@@ -8,7 +8,9 @@ import {
     Drawer,
     Descriptions
 } from "antd"
+import search from '../../../../components/search'
 const { Column, ColumnGroup } = Table;
+
 
 const messages = {
     "my.tracks.colTitle.id": "No.",
@@ -31,7 +33,9 @@ const messages = {
 
 
 export default (props) => {
-
+    const [searchIdValue, setSearchIdValue] = useState('');
+    const [searchAppointmentIdValue, setSearchAppointmentIdValue] = useState('');
+    const [searchPetNameValue, setSearchPetNameValue] = useState('');
     const [showDrawer, setShowDrawer] = useState(false);
     const [record, setRecord] = useState(0);
     const { data, page } = props;
@@ -59,19 +63,60 @@ export default (props) => {
     const onDrawerClose = () => {
         setShowDrawer(false);
     }
+    const onIdSearch = () => {
+        props.onSearch({ index: 1, id: searchIdValue });
+    }
+    const onIdReset = () => {
+        setSearchIdValue('')
+        props.onSearch({ index: 1 });
+    }
 
+    const onAppointmentIdSearch = () => {
+        props.onSearch({ index: 1, appointment_id: searchAppointmentIdValue });
+    }
+    const onAppointmentIdReset = () => {
+        setSearchAppointmentIdValue('')
+        props.onSearch({ index: 1 });
+    }
+
+
+    const onPetNameSearch = () => {
+        props.onSearch({ index: 1, pet_name: searchPetNameValue });
+    }
+    const onPetNameReset = () => {
+        setSearchPetNameValue('')
+        props.onSearch({ index: 1 });
+
+    }
+
+    const onPageChange = (e) => {
+        let data = {
+            index: e.current
+        }
+        if (searchPetNameValue !== '') {
+            data.pet_name = searchPetNameValue
+        }
+        if (searchAppointmentIdValue !== '') {
+            data.appointment_id = searchAppointmentIdValue
+        }
+        if (searchIdValue !== '') {
+            data.id = searchIdValue
+        }
+        props.onPageChange(data);
+        console.log(data)
+    }
     return (
         <div>
             <Row onClick={props.onClick}>
                 <Col span={24} offset={0}>
                     <Table dataSource={data}
-                        onChange={props.onPageChange}
-                        scroll={{ x: 1400 }}
+                        onChange={onPageChange}
+                        scroll={{ x: 1400, y: 450 }}
                         pagination={{ position: ['bottomcenter'], defaultCurrent: 1, total: page.total, simple: true, pageSize: 15 }}
                     >
-                        <Column title={languages["my.tracks.colTitle.id"]} dataIndex="id" key="id" fixed='left' />
-                        <Column title={languages["my.tracks.colTitle.appointmentId"]} dataIndex="appointment_id" key="appointment_id" />
-                        <Column title={languages["my.tracks.colTitle.petName"]} dataIndex="pet_name" key="pet_name" />
+                        <Column title={languages["my.tracks.colTitle.id"]} dataIndex="id" key="id" fixed='left'{...search(languages, setSearchIdValue, onIdSearch, onIdReset)} />
+                        <Column title={languages["my.tracks.colTitle.appointmentId"]} dataIndex="appointment_id" key="appointment_id" {...search(languages, setSearchAppointmentIdValue, onAppointmentIdSearch, onAppointmentIdReset)} />
+                        <Column title={languages["my.tracks.colTitle.petName"]} dataIndex="pet_name" key="pet_name" {...search(languages, setSearchPetNameValue, onPetNameSearch, onPetNameReset)} />
                         <Column title={languages["my.tracks.colTitle.cost"]} dataIndex="surgery_cost" key="surgery_cost" />
                         <Column title={languages["my.tracks.colTitle.startTime"]} dataIndex="surgery_begin_time" key="surgery_begin_time" />
                         <Column title={languages["my.tracks.colTitle.endTime"]} dataIndex="release_time" key="release_time" />

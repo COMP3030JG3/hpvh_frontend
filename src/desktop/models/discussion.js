@@ -12,7 +12,11 @@ export default {
             questions: true,
             answers: true,
             pets: true
-        }
+        },
+        questionsIndex: 1,
+        AnswersIndex: 1,
+        questionsTotal: 0,
+        answersTotal: 0,
     },
     reducers: {
 
@@ -33,6 +37,19 @@ export default {
         },
         resetQuestion(state, key) {
             return { ...state, questions: [] };
+        },
+        setQuestionsIndex(state, key) {
+            return { ...state, questionsIndex: key };
+        },
+        setQuestionsTotal(state, key) {
+            return { ...state, questionsTotal: key };
+        },
+        setAnswersTotal(state, key) {
+            return { ...state, answersTotal: key };
+        },
+
+        setAnswersIndex(state, key) {
+            return { ...state, answersIndex: key };
         }
     },
     effects: {
@@ -67,6 +84,8 @@ export default {
                 console.log(res.data)
                 if (res.data.code === 200) {
                     this.getQuestionReducer(res.data.data.item);
+                    this.setQuestionsIndex(index);
+                    this.setQuestionsTotal(res.data.data.total);
                 } else {
                     this.getQuestionReducer([]);
                 }
@@ -88,6 +107,8 @@ export default {
             }).then(res => {
                 if (res.data.code === 200) {
                     this.getAnswerReducer(res.data.data.item);
+                    this.setAnswersIndex(index);
+                    this.setAnswersTotal(res.data.data.total);
                 } else {
                     this.getAnswerReducer([]);
                 }

@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 
 const ProfileContainer = (props) => {
-    const messages = {
-        'profileEditor.title': "Titsdfsle"
-    };
+
     return (
         <ProfileEditor
             profile={props.loginInfo}

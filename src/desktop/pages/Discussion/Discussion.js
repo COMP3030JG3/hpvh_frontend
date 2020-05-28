@@ -9,6 +9,7 @@ export default (props) => {
     const [showQuestionModal, setShowQuestionModal] = useState(false);
     const [showAnswerModal, setShowAnswerModal] = useState(false);
     const [showSearchModal, setShowSearchModal] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
     const [questionId, setQuestionId] = useState(0);
     const [ques, setQues] = useState({});
 
@@ -23,11 +24,6 @@ export default (props) => {
     }))
     const data = props.data || []
 
-    window.onscroll = function () {
-
-        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        console.log("滚动距离" + scrollTop);
-    }
 
     const onViewClick = (item) => {
         setQuestionId(item.id)
@@ -38,6 +34,8 @@ export default (props) => {
     const back = () => {
         setShowAnswers(false)
         props.resetAnswer()
+        props.resetQuestion()
+        props.getQuestions({ index: 1 })
     }
     const onBackClick = (isAnswer) => {
         isAnswer ?
@@ -77,6 +75,11 @@ export default (props) => {
     const onFinish = (e) => {
 
     }
+    const onSearch = (e) => {
+        console.log(e)
+        setSearchValue('e')
+        props.onQuestionSearch(e)
+    }
 
     const questionList = data.map(item => (
         <div key={item.id}>
@@ -107,12 +110,53 @@ export default (props) => {
                 </div>
 
                 <div style={{ float: "right", color: "#69c0ff" }}>
-
                     {item.replies + "  replies"}
                 </div>
             </Card>
         </div>
     ));
+
+    const onLoadMoreClick = () => {
+
+
+
+        if (showAnswers) {
+            props.getAnswers({ index: props.answersIndex + 1, question_id: questionId })
+        } else {
+            let data = { index: props.questionsIndex + 1 }
+
+            if (searchValue !== '') {
+                data.content = searchValue;
+            }
+
+            props.getQuestions(data);
+        }
+
+
+    }
+
+    const LoadMore = () => {
+        console.log(props.answersTotal, props.answersIndex)
+        if (showAnswers) {
+            return (
+                props.answersTotal / (props.answersIndex * 15) >= 1 ?
+                    <Button onClick={onLoadMoreClick} type="link" size="large" style={{ display: "block", margin: "0 auto" }}>
+                        more...
+            </Button> : <></>
+            )
+        } else {
+            return (
+
+
+                props.questionsTotal / (props.questionsIndex * 15) >= 1 ?
+                    <Button onClick={onLoadMoreClick} type="link" size="large" style={{ display: "block", margin: "0 auto" }}>
+                        more...
+        </Button> : <></>
+            )
+        }
+
+
+    }
 
     const question = (<div>
         <Row>
@@ -123,6 +167,7 @@ export default (props) => {
                     type="right"
                 >
                     {questionList}
+
                 </QueueAnim>
             </Col>
         </Row>
@@ -176,26 +221,33 @@ export default (props) => {
 
                         </div>
                         <div>
-                            <Avatar
-                                onClick={() => onSearchClick(showAnswers)}
-                                className="fixed-widgets fixed-widgets-back"
-                                size={64}
-                                icon={<SearchOutlined />}
-                            />
+                            {showAnswers ?
+                                <></>
+                                : <Avatar
+                                    onClick={() => onSearchClick(showAnswers)}
+                                    className="fixed-widgets fixed-widgets-back"
+                                    size={64}
+                                    icon={<SearchOutlined />}
+                                />}
                         </div>
                     </Affix>,
                 </Col>
             </Row>
 
             {showAnswers ? <Answer question={ques} questionId={questionId} setShowAnswers={(e) => setShowAnswers(e)} /> : question}
-
+            <LoadMore />
             <HandleQuestionModal
+                resetQuestion={props.resetQuestion}
+                getQuestions={props.getQuestions}
                 onFinish={onQuestionFinish}
                 showModal={showQuestionModal}
                 setShowModal={setShowQuestionModal}
             />
 
             <HandleAnswerModal
+                questionId={questionId}
+                resetAnswer={props.resetAnswer}
+                getAnswers={props.getAnswers}
                 onFinish={onAnswerFinish}
                 showModal={showAnswerModal}
                 setShowModal={setShowAnswerModal}
@@ -203,6 +255,7 @@ export default (props) => {
 
             <HandleSearchModal
                 onFinish={onFinish}
+                onSearch={onSearch}
                 showModal={showSearchModal}
                 setShowModal={setShowSearchModal}
             />
@@ -230,7 +283,7 @@ const HandleQuestionModal = (props) => {
 
     const onCancel = () => {
         setShowModal(false);
-        props.firstLoadReducer({ answers: true })
+
     };
 
 
@@ -285,7 +338,7 @@ const HandleAnswerModal = (props) => {
 
     const onCancel = () => {
         setShowModal(false);
-        props.firstLoadReducer({ answers: true })
+
     };
 
 
@@ -353,7 +406,7 @@ const HandleSearchModal = (props) => {
                 bodyStyle={{ padding: "0" }}
 
             >
-                <Input.Search placeholder="input search text" onSearch={value => console.log(value)} size="large" enterButton />
+                <Input.Search placeholder="input search text" onSearch={props.onSearch} size="large" enterButton />
             </Modal>
         </div>
     );
