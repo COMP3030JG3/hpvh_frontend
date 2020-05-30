@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Tracks from "./Tracks"
+import TracksMobile from "./Tracks_mobile"
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import fomatDate from '../../../../utils/formatDate'
@@ -44,7 +45,9 @@ class TracksContainer extends React.Component {
             this.props.getOperations(v);
         }
         return (
-            <Tracks messages={this.props.intl.messages} data={data} onSearch={onSearch} page={page} onComplete={onComplete} onPageChange={onPageChange} />
+            this.props.isMobile ?
+                <TracksMobile messages={this.props.intl.messages} data={data} onSearch={onSearch} page={page} onComplete={onComplete} onPageChange={onPageChange} />
+                : <Tracks messages={this.props.intl.messages} data={data} onSearch={onSearch} page={page} onComplete={onComplete} onPageChange={onPageChange} />
         );
     }
 }

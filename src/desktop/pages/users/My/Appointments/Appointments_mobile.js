@@ -173,12 +173,12 @@ export default (props) => {
                 <Col span={24} offset={0}>
                     <Table dataSource={data}
                         onChange={onPageChange}
-                        scroll={{ x: 1600, y: 450 }}
+                        scroll={{ x: 1400, y: window.innerHeight - 180 }}
                         pagination={{ position: ['bottomcenter'], defaultCurrent: 1, total: page.total, simple: true, pageSize: 15 }}
                     >
-                        <Column align="center" title={languages["my.appointments.colTitle.id"]} dataIndex="app_primary_key" key="app_primary_key" fixed='left' width={100} {...search(languages, setSearchIdValue, onIdSearch, onIdReset)} />
-                        <Column align="center" title={languages["my.appointments.colTitle.petName"]} dataIndex="pet_name" key="pet_name" width={100} {...search(languages, setSearchPetNameValue, onPetNameSearch, onPetNameReset)} />
-                        <Column align="center" title={languages["my.appointments.colTitle.status"]} dataIndex="appointment_status" key="appointment_status" width={100}
+                        <Column align="center" title={languages["my.appointments.colTitle.id"]} dataIndex="app_primary_key" key="app_primary_key" fixed='left' width={45} {...search(languages, setSearchIdValue, onIdSearch, onIdReset)} />
+                        <Column align="center" title={languages["my.appointments.colTitle.petName"]} dataIndex="pet_name" key="pet_name" width={60} {...search(languages, setSearchPetNameValue, onPetNameSearch, onPetNameReset)} />
+                        <Column align="center" title={languages["my.appointments.colTitle.status"]} dataIndex="appointment_status" key="appointment_status" width={60}
                             render={status => (
                                 <Tag color={status === 'processing' ? 'blue' : 'green'} key={status}>
                                     {status}
@@ -186,7 +186,7 @@ export default (props) => {
                             )}
                             filterMultiple={false} filters={filters.status}
                         />
-                        <Column align="center" title={languages["my.appointments.colTitle.appointment_level"]} dataIndex="appointment_level" key="appointment_level" width={100}
+                        <Column align="center" title={languages["my.appointments.colTitle.appointment_level"]} dataIndex="appointment_level" key="appointment_level" width={60}
                             render={status => (
                                 <Tag color={setLevelColor(status)} key={status}>
                                     {status}
@@ -194,13 +194,13 @@ export default (props) => {
                             )}
                             filterMultiple={false} filters={filters.appointment_level}
                         />
-                        <Column align="center" title={languages["my.appointments.colTitle.type"]} dataIndex="appointment_type" key="appointment_type" width={100} filterMultiple={false} filters={filters.type} />
-                        <Column align="center" title={languages["my.appointments.colTitle.species"]} dataIndex="species" key="species" width={100} filterMultiple={false} filters={filters.species} />
-                        <Column align="center" title={languages["my.appointments.colTitle.gender"]} dataIndex="pet_gender" key="pet_gender" width={100} filterMultiple={false} filters={filters.gender} />
-                        <Column align="center" title={languages["my.appointments.colTitle.meetingCity"]} dataIndex="address" key="address" width={100} filterMultiple={false} filters={filters.meetingCity} />
-                        <Column align="center" title={languages["my.appointments.colTitle.appointmentTime"]} dataIndex="appointment_date" width={150} key="appointment_date" />
-                        <Column align="center" title={languages["my.appointments.colTitle.createTime"]} dataIndex="date" key="date" width={150} />
-                        <Column align="center" title={languages["my.appointments.colTitle.needOperation"]} dataIndex="needOperation" width={100} key="needOperation" filterMultiple={false} filters={filters.needOperation}
+                        <Column align="center" title={languages["my.appointments.colTitle.type"]} dataIndex="appointment_type" key="appointment_type" width={60} filterMultiple={false} filters={filters.type} />
+                        <Column align="center" title={languages["my.appointments.colTitle.species"]} dataIndex="species" key="species" width={60} filterMultiple={false} filters={filters.species} />
+                        <Column align="center" title={languages["my.appointments.colTitle.gender"]} dataIndex="pet_gender" key="pet_gender" width={60} filterMultiple={false} filters={filters.gender} />
+                        <Column align="center" title={languages["my.appointments.colTitle.meetingCity"]} dataIndex="address" key="address" width={60} filterMultiple={false} filters={filters.meetingCity} />
+                        <Column align="center" title={languages["my.appointments.colTitle.appointmentTime"]} dataIndex="appointment_date" width={100} key="appointment_date" />
+                        <Column align="center" title={languages["my.appointments.colTitle.createTime"]} dataIndex="date" key="date" width={100} />
+                        <Column align="center" title={languages["my.appointments.colTitle.needOperation"]} dataIndex="needOperation" width={60} key="needOperation" filterMultiple={false} filters={filters.needOperation}
                             render={status => (
                                 <Tag color={status === 'yes' ? 'green' : 'red'} key={status}>
                                     {status}
@@ -211,7 +211,7 @@ export default (props) => {
                                 <Button type="link" onClick={(e) => (onMoreClick(record))}>{languages["my.appointments.row.more"]}</Button>
                             )}
                             fixed='right'
-                            width={100}
+                            width={40}
 
                         />
                     </Table>

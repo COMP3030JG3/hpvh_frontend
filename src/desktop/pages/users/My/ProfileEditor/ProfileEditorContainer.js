@@ -1,17 +1,25 @@
 import React from "react";
 import ProfileEditor from "./ProfileEditor"
+import ProfileEditorMobile from "./ProfileEditor_mobile"
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 
 const ProfileContainer = (props) => {
 
     return (
-        <ProfileEditor
-            profile={props.loginInfo}
-            changeInfo={props.changeInfo}
-            changePassword={props.changePassword}
-            messages={props.intl.messages}
-        />
+        props.isMobile ?
+            <ProfileEditorMobile
+                profile={props.loginInfo}
+                changeInfo={props.changeInfo}
+                changePassword={props.changePassword}
+                messages={props.intl.messages}
+            /> : <ProfileEditor
+                profile={props.loginInfo}
+                changeInfo={props.changeInfo}
+                changePassword={props.changePassword}
+                messages={props.intl.messages}
+            />
+
     );
 };
 

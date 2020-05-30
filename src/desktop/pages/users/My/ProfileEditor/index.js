@@ -3,6 +3,6 @@ import ProfileEditorContainer from "./ProfileEditorContainer"
 
 export default (props) => {
     return (
-        <ProfileEditorContainer />
+        <ProfileEditorContainer {...props} />
     );
 };

@@ -111,15 +111,15 @@ export default (props) => {
                 <Col span={24} offset={0}>
                     <Table dataSource={data}
                         onChange={onPageChange}
-                        scroll={{ x: 1400, y: 450 }}
+                        scroll={{ x: 800, y: window.innerHeight - 180 }}
                         pagination={{ position: ['bottomcenter'], defaultCurrent: 1, total: page.total, simple: true, pageSize: 15 }}
                     >
-                        <Column align="center" title={languages["my.tracks.colTitle.id"]} dataIndex="id" key="id" fixed='left'{...search(languages, setSearchIdValue, onIdSearch, onIdReset)} />
-                        <Column align="center" title={languages["my.tracks.colTitle.appointmentId"]} dataIndex="appointment_id" key="appointment_id" {...search(languages, setSearchAppointmentIdValue, onAppointmentIdSearch, onAppointmentIdReset)} />
-                        <Column align="center" title={languages["my.tracks.colTitle.petName"]} dataIndex="pet_name" key="pet_name" {...search(languages, setSearchPetNameValue, onPetNameSearch, onPetNameReset)} />
-                        <Column align="center" title={languages["my.tracks.colTitle.cost"]} dataIndex="surgery_cost" key="surgery_cost" />
-                        <Column align="center" title={languages["my.tracks.colTitle.startTime"]} dataIndex="surgery_begin_time" key="surgery_begin_time" />
-                        <Column align="center" title={languages["my.tracks.colTitle.endTime"]} dataIndex="release_time" key="release_time" />
+                        <Column align="center" title={languages["my.tracks.colTitle.id"]} dataIndex="id" key="id" fixed='left'{...search(languages, setSearchIdValue, onIdSearch, onIdReset)} width={35} />
+                        <Column align="center" title={languages["my.tracks.colTitle.appointmentId"]} dataIndex="appointment_id" key="appointment_id" {...search(languages, setSearchAppointmentIdValue, onAppointmentIdSearch, onAppointmentIdReset)} width={70} />
+                        <Column align="center" title={languages["my.tracks.colTitle.petName"]} dataIndex="pet_name" key="pet_name" {...search(languages, setSearchPetNameValue, onPetNameSearch, onPetNameReset)} width={50} />
+                        <Column align="center" title={languages["my.tracks.colTitle.cost"]} dataIndex="surgery_cost" key="surgery_cost" width={40} />
+                        <Column align="center" title={languages["my.tracks.colTitle.startTime"]} dataIndex="surgery_begin_time" key="surgery_begin_time" width={70} />
+                        <Column align="center" title={languages["my.tracks.colTitle.endTime"]} dataIndex="release_time" key="release_time" width={70} />
 e
                         <Column align="center" title=""
                             render={(a, b, record) => (
@@ -128,7 +128,7 @@ e
 
                             )}
                             fixed='right'
-                            width={100}
+                            width={35}
                         />
                     </Table>
                 </Col>
@@ -153,6 +153,6 @@ e
                 </Descriptions>
             </Drawer>
 
-        </div>
+        </div >
     );
 };

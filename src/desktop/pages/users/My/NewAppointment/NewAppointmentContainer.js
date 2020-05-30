@@ -1,21 +1,11 @@
 import React from "react";
 import NewAppointment from "./NewAppointment"
+import NewAppointmentMobile from "./NewAppointment_mobile"
+
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 
-const NewAppointmentContainera = (props) => {
 
-
-    const data = {}
-
-
-
-    const historyPet = [{ id: 1, pet_name: 'aa', pet_gender: 'female', species: 'dog' }]
-
-    return (
-        <NewAppointment makeAppointment={props.makeAppointment} historyPet={historyPet} messages={props.intl.messages} />
-    );
-};
 
 class NewAppointmentContainer extends React.Component {
 
@@ -45,7 +35,9 @@ class NewAppointmentContainer extends React.Component {
         const historyPet = [{ id: 1, pet_name: 'aa', pet_gender: 'female', species: 'dog' }]
 
         return (
-            <NewAppointment makeAppointment={this.props.makeAppointment} historyPet={data} messages={this.props.intl.messages} />
+            this.props.isMobile ?
+                <NewAppointmentMobile makeAppointment={this.props.makeAppointment} historyPet={data} messages={this.props.intl.messages} />
+                : <NewAppointment makeAppointment={this.props.makeAppointment} historyPet={data} messages={this.props.intl.messages} />
         );
     }
 }

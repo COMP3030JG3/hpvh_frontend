@@ -3,6 +3,6 @@ import AppointmentsContainer from "./AppointmentsContainer"
 
 export default (props) => {
     return (
-        <AppointmentsContainer />
+        <AppointmentsContainer {...props} />
     );
 };

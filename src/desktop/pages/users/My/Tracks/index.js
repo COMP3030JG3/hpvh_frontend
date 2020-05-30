@@ -4,6 +4,6 @@ import TracksContainer from "./TracksContainer"
 
 export default (props) => {
     return (
-        <div><TracksContainer /> </div>
+        <div><TracksContainer {...props} /> </div>
     );
 };

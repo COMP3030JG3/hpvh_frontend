@@ -23,7 +23,7 @@ export default (props) => {
                     type="left"
                 >
                     <div key={props.children.key}>
-                        <Card bordered={false} style={{ cursor: 'default' }}>
+                        <Card bordered={false} bodyStyle={{ padding: "0" }} style={{ cursor: 'default' }}>
                             {props.children}
                         </Card>
                     </div>
@@ -33,13 +33,13 @@ export default (props) => {
         }
         switch (key) {
             case 'profileeditor':
-                return <AnimeContent><ProfileEditor key="ProfileEditor" /></AnimeContent>;
+                return <AnimeContent><ProfileEditor isMobile={props.isMobile} key="ProfileEditor" /></AnimeContent>;
             case 'appointments':
-                return <AnimeContent><Appointments key="appointments" /></AnimeContent>;
+                return <AnimeContent><Appointments isMobile={props.isMobile} key="appointments" /></AnimeContent>;
             case 'newappointment':
-                return <AnimeContent><NewAppointment key="newappointment" /></AnimeContent>;
+                return <AnimeContent><NewAppointment isMobile={props.isMobile} key="newappointment" /></AnimeContent>;
             case 'tracks':
-                return <AnimeContent><Tracks key="tracks" /></AnimeContent>;
+                return <AnimeContent><Tracks isMobile={props.isMobile} key="tracks" /></AnimeContent>;
             default:
                 return "";
         }
@@ -76,7 +76,7 @@ export default (props) => {
                                 </SubMenu>
                                 <Menu.Item key="profileeditor">{languages["my.profile.iconTip.edit"]}</Menu.Item>
                                 <Menu.Item key="discus1sion">
-                                    <Link to="/discussion">{languages["my.profile.menu.discussion"]}</Link>
+                                    <Link to="/discussion" onClick={() => { props.onLinkClick('user') }}>{languages["my.profile.menu.discussion"]}</Link>
 
                                 </Menu.Item>
                                 <Menu.Item key="logout">{languages["my.profile.iconTip.logOut"]}</Menu.Item>

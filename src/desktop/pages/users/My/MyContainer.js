@@ -63,6 +63,7 @@ class MyContainer extends React.Component {
         return (
             this.state.isMobile ? <MyMobile
                 onMenuClick={onMenuClick}
+                isMobile={this.state.isMobile}
                 fullname={this.props.loginInfo.fullname}
                 messages={this.props.intl.messages}
                 onLinkClick={this.props.setDiscussionEntry}

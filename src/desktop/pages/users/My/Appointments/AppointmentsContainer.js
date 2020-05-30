@@ -1,5 +1,6 @@
 import React from "react";
 import Appointments from "./Appointments"
+import AppointmentsMobile from "./Appointments_mobile"
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import fomatDate from '../../../../utils/formatDate'
@@ -47,7 +48,9 @@ class AppointmentsContainer extends React.Component {
         }
 
         return (
-            <Appointments messages={this.props.intl.messages} onSearch={onSearch} data={data} page={page} onPageChange={onPageChange} />
+            this.props.isMobile ? <AppointmentsMobile messages={this.props.intl.messages} onSearch={onSearch} data={data} page={page} onPageChange={onPageChange} />
+                : <Appointments messages={this.props.intl.messages} onSearch={onSearch} data={data} page={page} onPageChange={onPageChange} />
+
         );
     }
 }
