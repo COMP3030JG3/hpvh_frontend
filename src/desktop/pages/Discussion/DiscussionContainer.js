@@ -1,23 +1,36 @@
 import React from "react";
 import Discussion from "./Discussion"
+import DiscussionMoible from "./Discussion_mobile"
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import fomatDate from '../../utils/formatDate'
+import { enquireScreen } from 'enquire-js';
+
+let isMobile;
+enquireScreen((b) => {
+    isMobile = b;
+});
 
 class DiscussionContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isMobile,
+        };
 
+    }
     componentDidMount() {
         if (this.props.firstLoad.questions) {
             this.props.getQuestions({ index: 1 });
         }
-
+        enquireScreen((b) => {
+            this.setState({ isMobile: !!b });
+        });
     }
 
     componentDidUpdate() {
 
     }
-
-
 
     componentWillMount() {
 
@@ -68,23 +81,38 @@ class DiscussionContainer extends React.Component {
         }
 
         return (
-
-            <Discussion {...this.props} data={data}
-                resetQuestion={this.props.resetQuestion}
-                getQuestions={this.props.getQuestions}
-                getAnswers={this.props.getAnswers}
-                onQuestionSearch={onQuestionSearch}
-                onQuestionFinish={onQuestionFinish}
-                resetAnswer={this.props.resetAnswer}
-                questionsIndex={this.props.questionsIndex}
-                answersIndex={this.props.answersIndex}
-                answersTotal={this.props.answersTotal}
-                questionsTotal={this.props.questionsTotal}
-                onAnswerFinish={onAnswerFinish}
-                onAnswerClick={onAnswerClick}
-                firstLoadReducer={this.props.firstLoadReducer}
-            />
-
+            this.state.isMobile ?
+                <DiscussionMoible {...this.props} data={data}
+                    resetQuestion={this.props.resetQuestion}
+                    getQuestions={this.props.getQuestions}
+                    getAnswers={this.props.getAnswers}
+                    onQuestionSearch={onQuestionSearch}
+                    onQuestionFinish={onQuestionFinish}
+                    resetAnswer={this.props.resetAnswer}
+                    questionsIndex={this.props.questionsIndex}
+                    answersIndex={this.props.answersIndex}
+                    answersTotal={this.props.answersTotal}
+                    questionsTotal={this.props.questionsTotal}
+                    onAnswerFinish={onAnswerFinish}
+                    onAnswerClick={onAnswerClick}
+                    firstLoadReducer={this.props.firstLoadReducer}
+                />
+                :
+                <Discussion {...this.props} data={data}
+                    resetQuestion={this.props.resetQuestion}
+                    getQuestions={this.props.getQuestions}
+                    getAnswers={this.props.getAnswers}
+                    onQuestionSearch={onQuestionSearch}
+                    onQuestionFinish={onQuestionFinish}
+                    resetAnswer={this.props.resetAnswer}
+                    questionsIndex={this.props.questionsIndex}
+                    answersIndex={this.props.answersIndex}
+                    answersTotal={this.props.answersTotal}
+                    questionsTotal={this.props.questionsTotal}
+                    onAnswerFinish={onAnswerFinish}
+                    onAnswerClick={onAnswerClick}
+                    firstLoadReducer={this.props.firstLoadReducer}
+                />
         );
     }
 }

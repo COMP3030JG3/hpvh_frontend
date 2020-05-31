@@ -1,51 +1,84 @@
 import "./less/signup.less"
 import React from "react";
 import Signup from './Signup'
+import SignupMobile from './Signup_mobile'
+
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { Layout } from 'antd'
 import QueueAnim from 'rc-queue-anim';
+import { enquireScreen } from 'enquire-js';
 
 
+let isMobile;
+enquireScreen((b) => {
+    isMobile = b;
+});
+class SignupContainer extends React.Component {
 
-const SignupContainer = (props) => {
-    const { usersApi } = props
-    const onLangChange = (e) => {
-
-        props.langChange(e.target.value);
+    constructor(props) {
+        super(props);
+        this.state = {
+            isMobile,
+        };
 
     }
-    console.log(props)
-    const onFormFinish = v => {
-        let { code, confirm, prefix, ...data } = v;
-        usersApi.register(data)
-        console.log('Received values of form: ', data);
-    };
+    componentDidMount() {
 
-    return (
+        enquireScreen((b) => {
+            this.setState({ isMobile: !!b });
+        });
 
 
-        <QueueAnim
-            delay={100}
-            duration={1000}
-            type="bottom"
-            className="signup-wrap" >
-            <Signup key="signup"
-                messages={props.intl.messages}
-                lang={props.lang}
-                onFormFinish={onFormFinish}
-                onLangChange={onLangChange}
+    }
+    render() {
+        const { usersApi } = this.props
+        const onLangChange = (e) => {
+            this.props.langChange(e.target.value);
 
-            />
-        </QueueAnim>
+        }
+        const onFormFinish = v => {
+            let { code, confirm, prefix, ...data } = v;
+            usersApi.register(data)
+        };
+
+        return (
+
+            this.state.isMobile ?
+                <QueueAnim
+                    delay={100}
+                    duration={1000}
+                    type="bottom"
+
+                >
+                    <SignupMobile key="signup"
+                        messages={this.props.intl.messages}
+                        lang={this.props.lang}
+                        onFormFinish={onFormFinish}
+                        onLangChange={onLangChange}
+                    />
+                </QueueAnim>
+                :
+                <QueueAnim
+                    delay={100}
+                    duration={1000}
+                    type="bottom"
+                    className="signup-wrap" >
+                    <Signup key="signup"
+                        messages={this.props.intl.messages}
+                        lang={this.props.lang}
+                        onFormFinish={onFormFinish}
+                        onLangChange={onLangChange}
+                    />
+                </QueueAnim>
 
 
-    );
+        );
+    }
 };
 
 const mapState = state => ({
     lang: state.language,
-
 });
 
 const mapDispatch = dispatch => ({

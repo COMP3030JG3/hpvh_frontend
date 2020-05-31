@@ -11,68 +11,128 @@ export default (props) => {
     const languages = props.messages;
 
     return (
-        <div>
-            <Card className="login-form">
-                <Form
-                    name="normal_login"
-                    layout="vertical"
-                    initialValues={{
-                        remember: true,
-                    }}
-                    onFinish={props.onFormFinish}
-                >
-                    <Form.Item
-                        name="username"
-                        label={languages["login.username"]}
-                        rules={[
-                            {
-                                required: true,
-                                message: languages["login.requsername"],
-                            },
-                        ]}
+        props.isMobile ? <Form
+            name="normal_login"
+            layout="vertical"
+            initialValues={{
+                remember: true,
+            }}
+            onFinish={props.onFormFinish}
+            style={{ margin: "20% 16px" }}
+        >
+            <Form.Item
+                name="username"
+                label={languages["login.username"]}
+                rules={[
+                    {
+                        required: true,
+                        message: languages["login.requsername"],
+                    },
+                ]}
+            >
+                <Input prefix={<UserOutlined className="site-form-item-icon" />}
+                />
+            </Form.Item>
+            <Form.Item
+                name="password"
+                label={languages["login.password"]}
+                rules={[
+                    {
+                        required: true,
+                        message: languages["login.reqpassword"],
+                    },
+                ]}
+            >
+                <Input
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    type="password"
+
+                />
+            </Form.Item>
+
+
+
+
+            <Form.Item>
+                <Button type="primary" htmlType="submit" className="login-form-button">
+                    {languages["login.loginbutton"]}
+                </Button>
+                {languages["login.or"]}
+                <Button type="dash" className="login-form-button">
+                    <Link to="/signup">
+                        {languages["login.signup"]}
+                    </Link>
+                </Button>
+            </Form.Item>
+
+            <Radio.Group onChange={props.onLangChange} className="login-form-right" defaultValue={props.lang} size="small" buttonStyle="solid">
+                <Radio.Button value="en">English</Radio.Button>
+                <Radio.Button value="zh">中文</Radio.Button>
+            </Radio.Group>
+        </Form> :
+            <div>
+
+                <Card className="login-form">
+                    <Form
+                        name="normal_login"
+                        layout="vertical"
+                        initialValues={{
+                            remember: true,
+                        }}
+                        onFinish={props.onFormFinish}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />}
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        name="password"
-                        label={languages["login.password"]}
-                        rules={[
-                            {
-                                required: true,
-                                message: languages["login.reqpassword"],
-                            },
-                        ]}
-                    >
-                        <Input
-                            prefix={<LockOutlined className="site-form-item-icon" />}
-                            type="password"
+                        <Form.Item
+                            name="username"
+                            label={languages["login.username"]}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: languages["login.requsername"],
+                                },
+                            ]}
+                        >
+                            <Input prefix={<UserOutlined className="site-form-item-icon" />}
+                            />
+                        </Form.Item>
+                        <Form.Item
+                            name="password"
+                            label={languages["login.password"]}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: languages["login.reqpassword"],
+                                },
+                            ]}
+                        >
+                            <Input
+                                prefix={<LockOutlined className="site-form-item-icon" />}
+                                type="password"
 
-                        />
-                    </Form.Item>
+                            />
+                        </Form.Item>
 
 
 
 
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit" className="login-form-button">
-                            {languages["login.loginbutton"]}
-                        </Button>
-                        {languages["login.or"]}
-                        <Button type="dash" className="login-form-button">
-                            <Link to="/signup">
-                                {languages["login.signup"]}
-                            </Link>
-                        </Button>
-                    </Form.Item>
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit" className="login-form-button">
+                                {languages["login.loginbutton"]}
+                            </Button>
+                            {languages["login.or"]}
+                            <Button type="dash" className="login-form-button">
+                                <Link to="/signup">
+                                    {languages["login.signup"]}
+                                </Link>
+                            </Button>
+                        </Form.Item>
 
-                    <Radio.Group onChange={props.onLangChange} className="login-form-right" defaultValue={props.lang} size="small" buttonStyle="solid">
-                        <Radio.Button value="en">English</Radio.Button>
-                        <Radio.Button value="zh">中文</Radio.Button>
-                    </Radio.Group>
-                </Form>
-            </Card>
-        </div>
+                        <Radio.Group onChange={props.onLangChange} className="login-form-right" defaultValue={props.lang} size="small" buttonStyle="solid">
+                            <Radio.Button value="en">English</Radio.Button>
+                            <Radio.Button value="zh">中文</Radio.Button>
+                        </Radio.Group>
+                    </Form>
+                </Card>
+            </div>
     );
 };
 

@@ -1,5 +1,8 @@
 import React from "react";
 import Answer from "./Answer"
+import AnswerMobile from "./Answer_mobile"
+
+
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import fomatDate from '../../../utils/formatDate'
@@ -12,9 +15,6 @@ class DiscussionContainer extends React.Component {
 
 
     render() {
-
-
-
 
 
         let d
@@ -45,8 +45,10 @@ class DiscussionContainer extends React.Component {
             answers: data || []
         }
         return (
-            <Answer {...this.props} data={answerData}
-            />
+            this.props.isMobile ?
+                <AnswerMobile {...this.props} data={answerData} />
+                :
+                <Answer {...this.props} data={answerData} />
         );
     }
 }

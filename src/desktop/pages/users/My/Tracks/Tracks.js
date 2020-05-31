@@ -135,9 +135,10 @@ e
             </Row>
 
             <Drawer
-                title={languages["my.tracks.drawer.title"] || "Treatment detail"}
+                title={languages["my.tracks.drawer.title"]}
                 placement='left'
                 width="50%"
+                closable={false}
                 onClose={onDrawerClose}
                 visible={showDrawer}
             >

@@ -234,7 +234,7 @@ export default (props) => {
                 </Col>
             </Row>
 
-            {showAnswers ? <Answer question={ques} questionId={questionId} setShowAnswers={(e) => setShowAnswers(e)} /> : question}
+            {showAnswers ? <Answer isMobile={false} question={ques} questionId={questionId} setShowAnswers={(e) => setShowAnswers(e)} /> : question}
             <LoadMore />
             <HandleQuestionModal
                 resetQuestion={props.resetQuestion}

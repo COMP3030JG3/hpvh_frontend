@@ -219,10 +219,10 @@ export default (props) => {
             </Row>
 
             <Drawer
-                width="50%"
+                width="100%"
                 title={languages["my.appointments.title.drawers"]}
                 placement='left'
-                closable={false}
+                closable={true}
                 onClose={onDrawerClose}
                 visible={showDrawer}
             >
